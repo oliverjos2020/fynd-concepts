@@ -11,7 +11,8 @@ class Category extends Model
 
     protected $fillable = [
         'category',
-        'slug'
+        'slug',
+        'icon_url'
     ];
 
     public function user(){

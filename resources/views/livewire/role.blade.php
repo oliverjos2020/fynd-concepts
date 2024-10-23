@@ -13,19 +13,10 @@
         </div>
     </div>
 
-
-    {{-- <div class="row mb-3">
-        <div class="col-md-2">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" id="addButtonx">
-                Create User
-            </button>
-        </div>
-
-    </div> --}}
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
-                
+
                     <div class="form-group">
                         <label for="role">Role name</label>
                         <input type="text" wire:model="role" class="form-control" placeholder="Role Name">
@@ -37,7 +28,7 @@
                         <div class="bg-success p-2 text-light mx-2 mt-3">{{session('message')}}</div>
                         @endif
                     </div>
-                    
+
                     <button class="btn btn-primary btn-sm mt-3" wire:click.prevent="createRole">
                         Create Role
                     </button>
@@ -47,7 +38,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                
+
                 <div class="row">
                     <div class="col-md-1">
                         <select name="limit" wire:model="limit" class="form-control form-control-sm mt-2">
@@ -81,7 +72,7 @@
                                     <td><a class="btn btn-primary btn-sm text-light" style="cursor:pointer;" wire:click="edit({{$role->id}})"><i class="fa fa-edit"></i> Edit</a> </td>
                                     <td><a  @if(in_array($role->slug, ['admin', 'users', 'partners'])) class="text-light btn btn-secondary btn-sm" @else class="text-light btn btn-danger btn-sm" wire:click="delete({{$role->id}})" @endif ><i class="fa fa-trash"></i> Delete</a></a></td>
                                 </tr>
-                                
+
                                     @if($editingID === $role->id)
                                     <tr>
                                     <td colspan="4">
@@ -95,7 +86,7 @@
                                     </td>
                                     </tr>
                                     @endif
-                                
+
                             @empty
                                 <tr>
                                     <td colspan="4" class="text-center text-danger"> No record available</td>

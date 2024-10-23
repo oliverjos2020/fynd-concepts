@@ -7,14 +7,14 @@
 
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item active">Welcome to <strong>FLY-CATCHERS Dashboard</strong> </li>
+                            <li class="breadcrumb-item active">Welcome to <strong>Fynd Concepts</strong> </li>
                         </ol>
                     </div>
 
                 </div>
             </div>
         </div>
-        @if(Auth::user()->role_id == 1)
+        {{-- @if(Auth::user()->role_id == 1)
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
@@ -196,7 +196,7 @@
                 </div>
             </div>
         </div>
-        @endif
+        @endif --}}
         <div class="row">
             <div id="container" style="width:100%; height:400px;"></div>
         </div>
@@ -219,13 +219,13 @@
             // },
             series: [{
                 name: 'Local Clients',
-                data: @json(array_values($localChart))
+                data: 0
             },{
                 name:'International Clients',
-                data: @json(array_values($internationalChart))
+                data: 0
             },{
                 name:'Other Clients',
-                data: @json(array_values($otherChart))
+                data: 0
             }
             ]
         });

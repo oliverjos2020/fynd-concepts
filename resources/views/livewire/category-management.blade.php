@@ -12,32 +12,29 @@
 
         </div>
     </div>
-
-
-    {{-- <div class="row mb-3">
-        <div class="col-md-2">
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" id="addButtonx">
-                Create User
-            </button>
-        </div>
-
-    </div> --}}
     <div class="col-md-4">
         <div class="card">
             <div class="card-body">
 
                 <div class="form-group">
-                    <label for="category">Category name</label>
-                    <input type="text" wire:model="category" class="form-control" placeholder="Category Name">
+                    <label for="category">Service name</label>
+                    <input type="text" wire:model="category" class="form-control" placeholder="Service Name">
                     @error('category')
                     <span class="text-danger"> {{ $message }} </span>
                     @enderror
-
-                    @if(session('message'))
-                    <div class="bg-success p-2 text-light mx-2 mt-3">{{session('message')}}</div>
-                    @endif
                 </div>
 
+                <div class="form-group mt-2">
+                    <label for="icon_url" class="font-weight-bold">Icon</label>
+                    <input type="file" wire:model="icon_url" accept="image/jpg, image/jpeg, image/png" placeholder="Icon..." class="form-control">
+                    @error('icon_url')
+                    <span class="text-danger"> {{ $message }} </span>
+                    @enderror
+                    @if($icon_url)
+                        <img src="{{ $icon_url->temporaryUrl() }}" style="max-height:80px" class="image mt-2">
+                    @endif
+                    <div wire:loading wire:target="image">Loading...</div>
+                </div>
                 <button class="btn btn-primary btn-sm mt-3" wire:click.prevent="createCategory">
                     Create Category
                 </button>
@@ -69,7 +66,8 @@
                         <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th>Category</th>
+                                <th>Service</th>
+                                <th>Icon URL</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
 
@@ -80,15 +78,18 @@
                             <tr>
                                 <td>{{ ($categories->currentPage() - 1) * $categories->perPage() + $loop->iteration }}</td>
                                 <td>{{ $category->category }}</td>
+                                {{-- <td>{{ $category->icon_url == '' ? 'N/A' : '<img src="{{asset($category->icon_url)}}">' }}</td> --}}
+                                <td>@if($category->icon_url == '') N/A @else <img style="max-height:100px;" src="{{asset($category->icon_url)}}"> @endif</td>
                                 <td><a class="btn btn-primary btn-sm text-light" style="cursor:pointer;"
                                         wire:click="edit({{$category->id}})"><i class="fa fa-edit"></i> Edit</a> </td>
-                                <td><a @if(in_array($category->slug, ['hire', 'booking', 'entertainment'])) class="text-light btn btn-secondary btn-sm" @else class="text-light btn btn-danger btn-sm" wire:click="delete({{$category->id}})" @endif><i
+                                <td>
+                                    <a class="text-light btn btn-danger btn-sm"><i
                                             class="fa fa-trash"></i> Delete</a></a></td>
                             </tr>
 
                             @if($editingID === $category->id)
                             <tr>
-                                <td colspan="4">
+                                <td colspan="3">
                                     <input type="text" wire:model="editingcategory" placeholder="role.." id=""
                                         class="form-control mx-1">
                                     @error('editingcategory')
@@ -98,6 +99,13 @@
                                     <button type="submit" wire:click="update"
                                         class="btn btn-success btn-sm">Update</button> <button type="submit"
                                         wire:click="cancelEdit" class="btn btn-danger btn-sm">Cancel</button>
+                                </td>
+                                <td colspan="2">
+                                    <input type="file" wire:model="editingicon_url" placeholder="Icon URL.." id=""
+                                        class="form-control mx-1">
+                                    @error('editingicon_url')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </td>
                             </tr>
                             @endif

@@ -1,16 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\RoleManagement;
-// use App\Http\Livewire\CategoryManagement;
-use App\Http\Livewire\UserManagement;
-// use App\Http\Livewire\Index;
+use App\Http\Livewire\Home;
+use App\Http\Livewire\Index;
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\LGAManagement;
 use App\Http\Livewire\RegisterClient;
+use App\Http\Livewire\RoleManagement;
+use App\Http\Livewire\UserManagement;
+use Illuminate\Support\Facades\Route;
 // use App\Http\Livewire\ClientManagement;
 // use App\Http\Livewire\SingleClient;
 // use App\Http\Livewire\EditClient;
+use App\Http\Livewire\StateManagement;
+use App\Http\Livewire\ServiceManagement;
+use App\Http\Livewire\UserAuthentication;
 use App\Http\Controllers\UserAPIController;
+use App\Http\Livewire\SubServiceManagement;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,23 +28,22 @@ use App\Http\Controllers\UserAPIController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
 
+Route::get('/', Index::class)->name('index');
+Route::get('/authenticate', UserAuthentication::class)->name('authenticate');
 
 Route::middleware(['auth', 'checkStatus'])->group(function () {
     Route::get('/dashboard2', Dashboard::class)->name('dashboard2');
 });
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/generate-pdf/{clientID}', [PDFController::class, 'generatePDF']);
+    Route::get('/home', Home::class)->name('home');
     Route::get('/role', RoleManagement::class)->name('role');
-    // Route::get('/edit/{clientID}', EditClient::class)->name('editClient');
-    // Route::get('/category', CategoryManagement::class)->name('category');
+    Route::get('/service', ServiceManagement::class)->name('service');
+    Route::get('/state', StateManagement::class)->name('state');
+    Route::get('/lga', LGAManagement::class)->name('lga');
+    Route::get('/subservice', SubServiceManagement::class)->name('subservice');
     Route::get('/register-client', RegisterClient::class)->name('registerClient');
-    // Route::get('/client-management/{type}', ClientManagement::class)->name('clientManagement');
-    // Route::get('/client/{clientID}', SingleClient::class)->name('singleClient');
     Route::middleware('can:admin-only')->group(function () {
         Route::get('/users', UserManagement::class)->name('userSetup');
     });
@@ -50,8 +54,11 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::middleware('api')->group(function () {
+    Route::get('/api/v1/refresh', [UserAPIController::class, 'refresh']);
+    Route::post('/api/v1/logout', [UserAPIController::class, 'logout']);
     Route::post('/api/v1/register', [UserAPIController::class, 'register']);
-    Route::post('/api/v1/registerUser', [UserAPIController::class, 'registerUser']);
+    // Route::post('/api/v1/registerUser', [UserAPIController::class, 'registerUser']);
+    Route::post('/api/v1/updateUser', [UserAPIController::class, 'updateUser']);
     Route::post('/api/v1/login', [UserAPIController::class, 'login']);
     Route::post('/api/v1/confirmOTP', [UserAPIController::class, 'confirmOtp']);
 });

@@ -133,27 +133,27 @@
                             <!-- LOGO -->
                             <div class="navbar-brand-box">
                                 <a href="/" class="logo logo-dark">
-                                    {{-- <span class="logo-sm">
+                                    <span class="logo-sm">
 
-                                        <img src="{{asset('logo/d-logo-light.png')}}" alt="" height="35">
+                                        <img src="{{asset('logo/logo-light.png')}}" alt="" height="60">
                                     </span>
                                     <span class="logo-lg">
 
-                                        <img src="{{asset('logo/d-logo-dark.png')}}" alt="" height="35">
-                                    </span> --}}
-                                    <h4>FYND CONCEPTS</h4>
+                                        <img src="{{asset('logo/logo-light.png')}}" alt="" height="75">
+                                    </span>
+                                    {{-- <h4>FYND CONCEPTS</h4> --}}
                                 </a>
 
                                 <a href="/" class="logo logo-light">
-                                    {{-- <span class="logo-sm">
+                                    <span class="logo-sm">
 
-                                        <img src="{{asset('logo/d-logo-light.png')}}" alt="" height="35">
+                                        <img src="{{asset('logo/logo-light.png')}}" alt="" height="60">
                                     </span>
                                     <span class="logo-lg">
 
-                                        <img src="{{asset('logo/d-logo-light.png')}}" alt="" height="35">
-                                    </span> --}}
-                                    <h4 style="color: white; padding-top: 20px; font-weight: bolder;">FYND CONCEPTS</h4>
+                                        <img src="{{asset('logo/logo-light.png')}}" alt="" height="75">
+                                    </span>
+                                    {{-- <h4 style="color: white; padding-top: 20px; font-weight: bolder;">FYND CONCEPTS</h4> --}}
                                 </a>
                             </div>
                             </form>
@@ -201,9 +201,27 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="/category" class="waves-effect">
+                                <a href="/service" class="waves-effect">
                                     <i class="mdi mdi-hexagon-multiple-outline"></i>
-                                    <span>Category</span>
+                                    <span>Service</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/subservice" class="waves-effect">
+                                    <i class="mdi mdi-hexagon-multiple-outline"></i>
+                                    <span>Sub Service</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/state" class="waves-effect">
+                                    <i class="mdi mdi-hexagon-multiple-outline"></i>
+                                    <span>State</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/lga" class="waves-effect">
+                                    <i class="mdi mdi-hexagon-multiple-outline"></i>
+                                    <span>LGA</span>
                                 </a>
                             </li>
                             <li>

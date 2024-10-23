@@ -16,7 +16,7 @@ class RegisterUser extends Component
     public $password;
     public $image;
     public function createUser()
-    {
+    { 
         $validated = $this->validate([
             'name' => ['required', 'min:2', 'max:50'],
             'email' => ['required', 'email', 'unique:users', 'min:2'],
@@ -27,7 +27,7 @@ class RegisterUser extends Component
         if($this->image){
             $imageFile = $this->image->store('uploads', 'public');
         }
-        
+
         User::create([
             'name' => $this->name,
             'email' => $this->email,

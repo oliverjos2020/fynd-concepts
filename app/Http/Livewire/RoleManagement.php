@@ -31,7 +31,7 @@ class RoleManagement extends Component
     {
         $this->resetPage();
     }
-    
+
 
     public function createRole()
     {
@@ -103,7 +103,6 @@ class RoleManagement extends Component
             ]);
             return;
         }
-
     }
 
     public function render()
