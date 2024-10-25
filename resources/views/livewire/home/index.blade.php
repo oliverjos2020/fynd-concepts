@@ -140,12 +140,12 @@
                         </div>
                         <div class="col-md-8">
                             <div class="listing-filters gallery-filters">
-                                <a href="#" class="gallery-filter  gallery-filter-active" data-filter="*">
-                                    <span>All Categories</span></a>
-                                <a href="#" class="gallery-filter" data-filter=".for_sale"> <span>For
-                                        Sale</span></a>
-                                <a href="#" class="gallery-filter" data-filter=".for_rent"> <span>For
-                                        Rent</span></a>
+                                <a href="#" class="gallery-filter  gallery-filter-active" data-filter="*"><span>All Categories</span></a>
+                                    @forelse($services as $service)
+                                    <a href="#" class="gallery-filter" data-filter=".{{$service->slug}}"> <span>{{$service->service}}</span></a>
+                                    @empty
+                                    <a href="#" class="gallery-filter" data-filter=".for_sale"> <span>No Services</span></a>
+                                    @endforelse
                             </div>
                         </div>
                     </div>
@@ -153,12 +153,12 @@
                     <!-- grid-item-holder-->
                     <div class="grid-item-holder gallery-items gisp fl-wrap">
                         @forelse($users as $user)
-                        <div class="gallery-item for_sale">
+                        <div class="gallery-item {{$user->service->slug ?? ''}}">
                             <div class="listing-item">
                                 <article class="geodir-category-listing fl-wrap">
                                     <div class="geodir-category-img fl-wrap">
-                                        <a href="/" class="geodir-category-img_item">
-                                            <img src="{{ url($user->photos->first()->url?? 'logo/auto-logo.png') }}" alt="">
+                                        <a href="/artisan/{{$user->id}}" class="geodir-category-img_item">
+                                            <img src="{{ url($user->photos->first()->url?? 'logo/auto-logo.png') }}" alt="fynd concepts">
                                             <div class="overlay"></div>
                                         </a>
                                         <div class="geodir-category-location">
@@ -178,11 +178,11 @@
                                         </div>
                                     </div>
                                     <div class="geodir-category-content fl-wrap">
-                                        <h3 class="title-sin_item"><a href="listing-single.html">{{$user->business_name}}</a></h3>
+                                        <h3 class="title-sin_item"><a href="/artisan/{{$user->id}}">{{$user->business_name}}</a></h3>
                                         <p>{{ Str::limit($user->bio, 135, '...') }}</p>
 
                                         <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img
+                                            <a href="/" class="gcf-company"><img
                                                     src="{{url($user->passport ?? 'logo/logo-blue.png')}}" alt=""><span>By {{$user->name}}</span></a>
                                             <div class="listing-rating card-popup-rainingvis tolt"
                                                 data-microtip-position="top" data-tooltip="Good"
@@ -197,7 +197,7 @@
                         @endforelse
                     </div>
                     <!-- grid-item-holder-->
-                    <a href="listing.html" class="btn float-btn small-btn color-bg">View All Properties</a>
+                    <a href="listing.html" class="btn float-btn small-btn color-bg">View More artisans </a>
                 </div>
             </section>
             <!-- section end-->
@@ -209,7 +209,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="about-title ab-hero fl-wrap">
-                                    <h2>Why Choose Our Properties </h2>
+                                    <h2>Why Choose Our Services </h2>
                                     <h4>Check video presentation to find out more about us .</h4>
                                 </div>
                                 <div class="services-opions fl-wrap">

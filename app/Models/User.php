@@ -47,7 +47,16 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public function service(){
-        return $this->belongsTo(service::class);
+        return $this->belongsTo(Service::class);
+    }
+    public function state(){
+        return $this->belongsTo(State::class);
+    }
+    public function lga(){
+        return $this->belongsTo(LGA::class);
+    }
+    public function subservice(){
+        return $this->belongsTo(SubService::class);
     }
 
     public function photos(){
