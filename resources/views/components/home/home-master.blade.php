@@ -8,7 +8,7 @@
         <meta name="robots" content="index, follow"/>
         <meta name="keywords" content="Fynd Concept"/>
         <meta name="description" content="Fynd Concept"/>
-        <link rel="shortcut icon" href="{{ asset('logo/logo-light.png') }}">
+        <link rel="shortcut icon" href="{{ asset('logo/logo-blue.png') }}">
         <!--=============== css  ===============-->
         <link type="text/css" rel="stylesheet" href="{{asset('home-css/plugins.css')}}">
         <link type="text/css" rel="stylesheet" href="{{asset('home-css/style.css')}}">
@@ -60,18 +60,18 @@
                 </div>
                 <!--  add new  btn end -->
                 <!--  header-opt_btn -->
-                <div class="header-opt_btn tolt" data-microtip-position="bottom"  data-tooltip="Language / Currency">
+                {{-- <div class="header-opt_btn tolt" data-microtip-position="bottom"  data-tooltip="Language / Currency">
                     <span><i class="fal fa-globe"></i></span>
-                </div>
+                </div> --}}
                 <!--  header-opt_btn end -->
                 <!--  cart-btn   -->
-                <div class="cart-btn  tolt show-header-modal" data-microtip-position="bottom"  data-tooltip="Your Wishlist / Compare">
+                {{-- <div class="cart-btn  tolt show-header-modal" data-microtip-position="bottom"  data-tooltip="Your Wishlist / Compare">
                     <i class="fal fa-bell"></i>
                     <span class="cart-btn_counter color-bg">5</span>
-                </div>
+                </div> --}}
                 <!--  cart-btn end -->
                 <!--  login btn -->
-                <div class="show-reg-form modal-open"><i class="fas fa-user"></i><span>Sign In</span></div>
+                {{-- <div class="show-reg-form modal-open"><i class="fas fa-user"></i><span>Sign In</span></div> --}}
                 <!--  login btn  end -->
                 <!--  navigation -->
                 <div class="nav-holder main-menu">
@@ -82,8 +82,10 @@
 
                             </li>
                             <li>
+                                <a href="/listing">Listing</a>
+                            </li>
+                            <li>
                                 <a href="#">About Us</a>
-
                             </li>
                             <li>
                                 <a href="#">FAQ</a>

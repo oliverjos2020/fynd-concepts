@@ -18,6 +18,8 @@ use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserAPIController;
 use App\Http\Livewire\SubServiceManagement;
+use App\Http\Livewire\SingleArtisan;
+use App\Http\Livewire\Listing;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +35,8 @@ use App\Http\Livewire\SubServiceManagement;
 
 Route::get('/', Index::class)->name('index');
 Route::get('/authenticate', UserAuthentication::class)->name('authenticate');
+Route::get('/artisan/{artisanID}', SingleArtisan::class)->name('singleartisan');
+Route::get('/listing', Listing::class)->name('listing');
 
 Route::middleware(['auth', 'checkStatus'])->group(function () {
     Route::get('/dashboard2', Dashboard::class)->name('dashboard2');
