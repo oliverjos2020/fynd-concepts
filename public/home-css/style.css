@@ -3172,7 +3172,8 @@ section.single-par2  .scroll-down-wrap{
 }
 .geodir-category-img img  , .card-info-media img{
 	width: 100%;
-	height: auto;
+	height: 230px;
+    object-fit: cover;
 }
 .geodir-category-img .geodir-category-location{
 	position:absolute;
@@ -4419,7 +4420,7 @@ section.single-par2  .scroll-down-wrap{
 	background-position: left;
 	background-repeat: repeat;
 	background-origin: content-box;
-	background:url(../images/city-bg.png);
+	background:url(../img/city-bg.png);
 }
 .profile-widget-header:before {
 	content:'';

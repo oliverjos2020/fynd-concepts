@@ -24,6 +24,9 @@ class UserAuthentication extends Component
     public $password;
     public $password_confirmation;
     public $otp = [];
+    public $loginEmail;
+    public $loginPassword;
+    public $remember = false;
 
     public function register()
     {
@@ -56,6 +59,30 @@ class UserAuthentication extends Component
             ]);
 
         }catch (Exception $e){
+            $this->dispatchBrowserEvent('notify', [
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ]);
+            return;
+        }
+    }
+
+    public function login()
+    {
+        try {
+            $this->validate([
+                'loginEmail' => ['required','email'],
+                'loginPassword' => ['required'],
+            ]);
+
+            if (Auth::attempt(['email' => $this->loginEmail, 'password' => $this->loginPassword], $this->remember)) {
+                return redirect()->route('home');
+            } else {
+                throw ValidationException::withMessages([
+                    'loginEmail' => ['The provided credentials are incorrect.'],
+                ]);
+            }
+        } catch (Exception $e) {
             $this->dispatchBrowserEvent('notify', [
                 'type' => 'error',
                 'message' => $e->getMessage(),

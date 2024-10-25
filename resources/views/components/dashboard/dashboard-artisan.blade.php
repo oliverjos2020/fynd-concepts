@@ -58,7 +58,14 @@
                 <!-- header-search button end  -->
                 <!--  add new  btn -->
                 <div class="add-list_wrap">
-                    <a href="/authenticate" class="add-list color-bg"><i class="fas fa-user"></i> <span>Sign Up | Sign In </span></a>
+                    @if(!Auth::check())
+                        <a href="/authenticate" class="add-list color-bg"><i class="fas fa-user"></i> <span>Sign Up | Sign In </span></a>
+                    @else
+                    <form method="POST" action="{{ route('logout') }}" >
+                        @csrf
+                        <button class="add-list color-bg" style="border:none"><i class="fal fa-power-off"></i> <span>Logout</span></button>
+                    </form>
+                    @endif
                 </div>
                 <!--  add new  btn end -->
                 <!--  header-opt_btn -->
@@ -275,7 +282,7 @@
                             <div class="user-profile-menu">
                                 <h3>Main</h3>
                                 <ul class="no-list-style">
-                                    <li><a href="dashboard.html" class="user-profile-act"><i class="fal fa-chart-line"></i>Dashboard</a></li>
+                                    <li><a href="/home" class="user-profile-act"><i class="fal fa-chart-line"></i>Dashboard</a></li>
                                     <li><a href="dashboard-myprofile.html"><i class="fal fa-user-edit"></i> Edit profile</a></li>
                                     <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
                                     <li><a href="dashboard-agents.html"><i class="fal fa-users"></i> Agents List</a></li>

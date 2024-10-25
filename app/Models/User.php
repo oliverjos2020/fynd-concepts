@@ -46,24 +46,16 @@ class User extends Authenticatable implements JWTSubject
         'remember_token',
     ];
 
-    public function need(){
-        return $this->belongsTo(Need::class);
+    public function service(){
+        return $this->belongsTo(service::class);
     }
-    public function payslip(){
-        return $this->belongsTo(Payslip::class);
-    }
-    public function biometric(){
-        return $this->belongsTo(Biometric::class);
+
+    public function photos(){
+        return $this->hasMany(Photo::class);
     }
 
     public function role(){
         return $this->belongsTo(Role::class);
-    }
-    public function otherdoc(){
-        return $this->belongsTo(OtherDoc::class);
-    }
-    public function category(){
-        return $this->belongsTo(Category::class);
     }
 
 

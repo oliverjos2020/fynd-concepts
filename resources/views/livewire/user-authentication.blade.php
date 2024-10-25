@@ -6,8 +6,7 @@
         <div class="reg-overlay-x"></div>
         <div class="main-register-holder tabs-act">
             @if ($step !== 3)
-            <div class="main-register-wrapper modal_main-x fl-wrap"
-                style="border: 1px solid #80808029;">
+                <div class="main-register-wrapper modal_main-x fl-wrap" style="border: 1px solid #80808029;">
 
                     <div class="main-register">
 
@@ -26,23 +25,26 @@
                                     <!--tab -->
                                     <div id="tab-1" class="tab-content first-tab">
                                         <div class="custom-form">
-                                            <form method="post" name="registerform">
-                                                <label>Username or Email Address * <span class="dec-icon"><i
-                                                            class="fal fa-user"></i></span></label>
-                                                <input name="email" type="text" onClick="this.select()"
-                                                    value="">
+                                            <form wire:submit.prevent="login">
+                                                <label>Email Address * <span class="dec-icon"><i class="fal fa-user"></i></span></label>
+                                                <input name="email" type="text" wire:model="loginEmail">
+                                                @error('loginEmail')
+                                                        <label class="text-danger"> {{ $message }} </label>
+                                                    @enderror
                                                 <div class="pass-input-wrap fl-wrap">
-                                                    <label>Password * <span class="dec-icon"><i
-                                                                class="fal fa-key"></i></span></label>
-                                                    <input name="password" type="password" autocomplete="off"
-                                                        onClick="this.select()" value="">
+                                                    <label>Password * <span class="dec-icon"><i class="fal fa-key"></i></span></label>
+                                                    <input name="password" type="password" autocomplete="off" wire:model="loginPassword">
                                                     <span class="eye"><i class="fal fa-eye"></i> </span>
                                                 </div>
+                                                @error('loginPassword')
+                                                    <label class="text-danger"> {{ $message }} </label>
+                                                 @enderror
+
                                                 <div class="lost_password">
                                                     <a href="#">Lost Your Password?</a>
                                                 </div>
                                                 <div class="filter-tags">
-                                                    <input id="check-a3" type="checkbox" name="check">
+                                                    <input id="check-a3" type="checkbox" wire:model="remember">
                                                     <label for="check-a3">Remember me</label>
                                                 </div>
                                                 <div class="clearfix"></div>
@@ -118,46 +120,45 @@
                         </div>
                     </div>
                 </div>
-                @endif
-                @if ($step == 3)
-                    <div class="otp-container">
-                        <h2>Enter OTP</h2>
-                        <div class="otp-inputs">
-                            <input type="text" maxlength="1" wire:model.lazy="otp.0" class="otp-input" autofocus>
-                            <input type="text" maxlength="1" wire:model.lazy="otp.1" class="otp-input">
-                            <input type="text" maxlength="1" wire:model.lazy="otp.2" class="otp-input">
-                            <input type="text" maxlength="1" wire:model.lazy="otp.3" class="otp-input">
-                            <input type="text" maxlength="1" wire:model.lazy="otp.4" class="otp-input">
-                            <input type="text" maxlength="1" wire:model.lazy="otp.5" class="otp-input">
-                        </div>
-                        <button class="proceed-button" wire:click="submitOtp">Confirm OTP</button>
+            @endif
+            @if ($step == 3)
+                <div class="otp-container">
+                    <h2>Enter OTP</h2>
+                    <div class="otp-inputs">
+                        <input type="text" maxlength="1" wire:model.lazy="otp.0" class="otp-input" autofocus>
+                        <input type="text" maxlength="1" wire:model.lazy="otp.1" class="otp-input">
+                        <input type="text" maxlength="1" wire:model.lazy="otp.2" class="otp-input">
+                        <input type="text" maxlength="1" wire:model.lazy="otp.3" class="otp-input">
+                        <input type="text" maxlength="1" wire:model.lazy="otp.4" class="otp-input">
+                        <input type="text" maxlength="1" wire:model.lazy="otp.5" class="otp-input">
                     </div>
-                    <script>
-                        document.querySelectorAll('.otp-input').forEach((input, index) => {
-                            input.addEventListener('input', (e) => {
-                                if (input.value.length === 1 && index < 5) {
-                                    // Move to the next input if a character is entered
-                                    document.querySelectorAll('.otp-input')[index + 1].focus();
-                                } else if (input.value.length === 0 && index > 0) {
-                                    // Move to the previous input if the current one is cleared
-                                    document.querySelectorAll('.otp-input')[index - 1].focus();
-                                }
-                            });
-
-                            // Move focus to the next input on arrow right key press
-                            input.addEventListener('keydown', (e) => {
-                                if (e.key === 'ArrowRight' && index < 5) {
-                                    document.querySelectorAll('.otp-input')[index + 1].focus();
-                                }
-                                // Move focus to the previous input on arrow left key press
-                                if (e.key === 'ArrowLeft' && index > 0) {
-                                    document.querySelectorAll('.otp-input')[index - 1].focus();
-                                }
-                            });
+                    <button class="proceed-button" wire:click="submitOtp">Confirm OTP</button>
+                </div>
+                <script>
+                    document.querySelectorAll('.otp-input').forEach((input, index) => {
+                        input.addEventListener('input', (e) => {
+                            if (input.value.length === 1 && index < 5) {
+                                // Move to the next input if a character is entered
+                                document.querySelectorAll('.otp-input')[index + 1].focus();
+                            } else if (input.value.length === 0 && index > 0) {
+                                // Move to the previous input if the current one is cleared
+                                document.querySelectorAll('.otp-input')[index - 1].focus();
+                            }
                         });
-                    </script>
-                @endif
+
+                        // Move focus to the next input on arrow right key press
+                        input.addEventListener('keydown', (e) => {
+                            if (e.key === 'ArrowRight' && index < 5) {
+                                document.querySelectorAll('.otp-input')[index + 1].focus();
+                            }
+                            // Move focus to the previous input on arrow left key press
+                            if (e.key === 'ArrowLeft' && index > 0) {
+                                document.querySelectorAll('.otp-input')[index - 1].focus();
+                            }
+                        });
+                    });
+                </script>
+            @endif
         </div>
     </div>
 </div>
-

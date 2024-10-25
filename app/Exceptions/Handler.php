@@ -43,21 +43,21 @@ class Handler extends ExceptionHandler
     {
          // Handle MethodNotAllowedHttpException
          if ($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException) {
-            return response()->json(['message' => 'Method not allowed. Please use the correct HTTP method.', 'code' => 405], 405);
+            return response()->json(['message' => 'Method not allowed. Please use the correct HTTP method.', 'responseCode' => 405], 405);
         }
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
             $statusCode = $exception->getStatusCode();
 
             switch ($statusCode) {
                 case 404:
-                    return response()->json(['message' => 'Resource not found', 'code' => 404], 404);
+                    return response()->json(['message' => 'Resource not found', 'responseCode' => 404], 404);
                 case 403:
-                    return response()->json(['message' => 'Forbidden', 'code' => 403], 403);
+                    return response()->json(['message' => 'Forbidden', 'responseCode' => 403], 403);
                 case 401:
-                    return response()->json(['message' => 'Unauthorized', 'code' => 401], 401);
+                    return response()->json(['message' => 'Unauthorized. Kindly Login', 'responseCode' => 401], 401);
                 case 500:
                 default:
-                    return response()->json(['message' => 'Server error', 'code' => 500], 500);
+                    return response()->json(['message' => 'Server error', 'responseCode' => 500], 500);
             }
         }
 

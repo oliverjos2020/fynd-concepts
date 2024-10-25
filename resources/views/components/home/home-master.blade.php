@@ -3,11 +3,12 @@
 <head>
         <!--=============== basic  ===============-->
         <meta charset="UTF-8">
-        <title>Homeradar - Real Estate Listing Template</title>
+        <title>Fynd Concept</title>
 
         <meta name="robots" content="index, follow"/>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
+        <meta name="keywords" content="Fynd Concept"/>
+        <meta name="description" content="Fynd Concept"/>
+        <link rel="shortcut icon" href="{{ asset('logo/logo-light.png') }}">
         <!--=============== css  ===============-->
         <link type="text/css" rel="stylesheet" href="{{asset('home-css/plugins.css')}}">
         <link type="text/css" rel="stylesheet" href="{{asset('home-css/style.css')}}">

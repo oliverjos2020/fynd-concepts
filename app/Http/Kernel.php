@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'auth.redirect' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'checkStatus' => \App\Http\Middleware\CheckUserStatus::class,
+        'auth.jwt' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
     ];
 }

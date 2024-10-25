@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\StateManagement;
 use App\Http\Livewire\ServiceManagement;
 use App\Http\Livewire\UserAuthentication;
+use App\Http\Controllers\ArtisanController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserAPIController;
 use App\Http\Livewire\SubServiceManagement;
 
@@ -57,10 +59,13 @@ Route::middleware('api')->group(function () {
     Route::get('/api/v1/refresh', [UserAPIController::class, 'refresh']);
     Route::post('/api/v1/logout', [UserAPIController::class, 'logout']);
     Route::post('/api/v1/register', [UserAPIController::class, 'register']);
-    // Route::post('/api/v1/registerUser', [UserAPIController::class, 'registerUser']);
     Route::post('/api/v1/updateUser', [UserAPIController::class, 'updateUser']);
     Route::post('/api/v1/login', [UserAPIController::class, 'login']);
     Route::post('/api/v1/confirmOTP', [UserAPIController::class, 'confirmOtp']);
+    Route::group(['middleware' => ['auth.jwt']], function() {
+        Route::get('/api/v1/services', [ServiceController::class, 'services']);
+        Route::get('/api/v1/artisans', [ArtisanController::class, 'artisans']);
+    });
 });
 
 require __DIR__.'/auth.php';
