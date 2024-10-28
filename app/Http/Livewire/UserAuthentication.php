@@ -76,6 +76,14 @@ class UserAuthentication extends Component
             ]);
 
             if (Auth::attempt(['email' => $this->loginEmail, 'password' => $this->loginPassword], $this->remember)) {
+                $user = User::where('email', $this->loginEmail)->first();
+                if ($user->role_id == 1) {
+                    return redirect(RouteServiceProvider::HOME); // Redirect to dashboard for admin
+                } elseif ($user->role_id == 2) {
+                    return redirect(RouteServiceProvider::ARTISANDASHBOARD); // Redirect to homepage for others
+                }else{
+                    return redirect(RouteServiceProvider::HOMEUSER);
+                }
                 return redirect()->route('home');
             } else {
                 throw ValidationException::withMessages([

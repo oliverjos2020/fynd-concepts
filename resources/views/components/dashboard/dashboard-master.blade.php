@@ -225,30 +225,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/register-client" class="waves-effect">
-                                    <i class="mdi mdi-account-supervisor-outline"></i>
-                                    <span>Create Client</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="/users" class="waves-effect">
                                     <i class="mdi mdi-account-supervisor-outline"></i>
                                     <span>User Management</span>
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="mdi mdi-account-supervisor-outline"></i>
-                                    <span>Clients</span>
-                                </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="/client-management/all">All Clients</a></li>
-                                    <li><a href="/client-management/local">Local Clients</a></li>
-                                    <li><a href="/client-management/international">International Clients</a></li>
-                                    <li><a href="/client-management/other">Other Clients </a></li>
-                                </ul>
-                            </li>
+
                             @elseif(Auth::user()->role_id == 2)
                                 <li>
                                     <a href="/dashboard2" class="waves-effect">

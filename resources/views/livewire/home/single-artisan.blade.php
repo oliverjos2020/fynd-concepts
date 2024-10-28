@@ -38,7 +38,7 @@
                                             <circle cx="16" cy="16" r="15.9155"
                                                 class="progress-bar__background" />
                                             <circle cx="16" cy="16" r="15.9155"
-                                                class="progress-bar__progress 
+                                                class="progress-bar__progress
                                                 js-progress-bar" />
                                         </svg>
                                     </div>
@@ -63,7 +63,7 @@
                                     <div class="col-md-8">
                                         <h1>{{$user->business_name}} <span class="verified-badge tolt" data-microtip-position="bottom"  data-tooltip="Verified"><i class="fas fa-check"></i></span></h1>
                                         <div class="geodir-category-location fl-wrap">
-                                            <a href="#"><i class="fas fa-map-marker-alt"></i>  {{$user->work_address}}</a> 
+                                            <a href="#"><i class="fas fa-map-marker-alt"></i>  {{$user->work_address}}</a>
                                             <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
                                         </div>
                                     </div>
@@ -150,7 +150,7 @@
                                         <span>3 Full</span>
                                     </div>
                                 </div>
-                                <!-- inline-facts end -->                                                                        
+                                <!-- inline-facts end -->
                             </div> --}}
                             <div class="list-single-main-container fl-wrap">
                                 <!-- list-single-main-item -->
@@ -163,8 +163,8 @@
                                         {{-- <a href="#" class="btn float-btn color-bg">Visit Website</a> --}}
                                     </div>
                                 </div>
-                                <!-- list-single-main-item end -->                                          
-                              
+                                <!-- list-single-main-item end -->
+
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fw-lmi fl-wrap" id="sec5">
                                     <div class="map-container mapC_vis mapC_vis2">
@@ -173,7 +173,7 @@
                                     </div>
                                     <input id="pac-input" class="controls fl-wrap controls-mapwn" autocomplete="on" type="text" placeholder="What Nearby? Schools, Gym... " value="">
                                 </div>
-                                <!-- list-single-main-item end -->                                            
+                                <!-- list-single-main-item end -->
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fl-wrap" id="sec6">
                                     <div class="list-single-main-item-title">
@@ -185,10 +185,10 @@
                                                 <span class="review-number blue-bg">4.0</span>
                                                 <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
                                             </div>
-                                            <!-- reviews-comments-item -->  
+                                            <!-- reviews-comments-item -->
                                             <div class="reviews-comments-item">
                                                 <div class="review-comments-avatar">
-                                                    <img src="{{url('assets/images/users/avatar-1.jpg')}}" alt="fynd concepts"> 
+                                                    <img src="{{url('assets/images/users/avatar-1.jpg')}}" alt="fynd concepts">
                                                 </div>
                                                 <div class="reviews-comments-item-text smpar">
                                                     <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
@@ -203,11 +203,11 @@
                                                     <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>12 April 2018</span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  Helpful Review  <span>6</span> </a></div>
                                                 </div>
                                             </div>
-                                            <!--reviews-comments-item end--> 
-                                            <!-- reviews-comments-item -->  
+                                            <!--reviews-comments-item end-->
+                                            <!-- reviews-comments-item -->
                                             <div class="reviews-comments-item">
                                                 <div class="review-comments-avatar">
-                                                    <img src="{{url('assets/images/users/avatar-2.jpg')}}" alt="fynd concepts"> 
+                                                    <img src="{{url('assets/images/users/avatar-2.jpg')}}" alt="fynd concepts">
                                                 </div>
                                                 <div class="reviews-comments-item-text smpar">
                                                     <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
@@ -222,11 +222,11 @@
                                                     <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>03 December 2017</span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  Helpful Review  <span>2</span> </a></div>
                                                 </div>
                                             </div>
-                                            <!--reviews-comments-item end-->                                                                  
+                                            <!--reviews-comments-item end-->
                                         </div>
                                     </div>
                                 </div>
-                                <!-- list-single-main-item end -->                                             
+                                <!-- list-single-main-item end -->
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fl-wrap" id="sec15">
                                     <div class="list-single-main-item-title fl-wrap">
@@ -249,7 +249,7 @@
                                                 <label for="rating-5"    class="fal fa-star"></label>
                                             </div>
                                             <div class="count-radio-wrapper">
-                                                <span id="count-checked-radio">Your Rating</span>  
+                                                <span id="count-checked-radio">Your Rating</span>
                                             </div>
                                         </div>
                                         <!-- Review Comment -->
@@ -272,7 +272,7 @@
                                     </div>
                                     <!-- Add Review Box / End -->
                                 </div>
-                                <!-- list-single-main-item end -->                                            
+                                <!-- list-single-main-item end -->
                             </div>
                         </div>
                     </div>
@@ -297,7 +297,7 @@
                                         <div class="profile-widget-header-title">
                                             <h4><a href="/artisan/{{$artisanID}}">{{$user->name}}</a></h4>
                                             <div class="clearfix"></div>
-                                            <div class="pwh_counter"><span>22</span>Property Listings</div>
+                                            {{-- <div class="pwh_counter"><span>22</span>Property Listings</div> --}}
                                             <div class="clearfix"></div>
                                             <div class="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
                                         </div>
@@ -319,7 +319,7 @@
                                 </div>
                             </div>
                         </div>
-                                                
+
                         <!--box-widget-->
                         <div class="box-widget fl-wrap">
                             <div class="box-widget fl-wrap" id="sec-contact">
@@ -330,19 +330,19 @@
                                             <label>Your name* <span class="dec-icon"><i class="fas fa-user"></i></span></label>
                                             <input name="phone" type="text" onClick="this.select()" value="">
                                             <label>Your email  * <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
-                                            <input name="email" type="text" onClick="this.select()" value="">      
+                                            <input name="email" type="text" onClick="this.select()" value="">
                                             <label>Your review  * <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
-                                            <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>  
-                                            
+                                            <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
+
                                             <button type="submit" class="btn float-btn color-bg fw-btn"> Send</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--box-widget end -->                                   
+                        <!--box-widget end -->
                     </div>
-                    <!--  sidebar end-->                            
+                    <!--  sidebar end-->
                 </div>
                 <div class="fl-wrap limit-box"></div>
                 <div class="listing-carousel-wrapper carousel-wrap fl-wrap">
@@ -391,7 +391,7 @@
                                     </div>
                                 </article>
                             </div>
-                            <!-- listing-item end-->							
+                            <!-- listing-item end-->
                         </div>
                         <!-- slick-slide-item end-->
                         <!-- slick-slide-item -->
@@ -435,9 +435,9 @@
                                     </div>
                                 </article>
                             </div>
-                            <!-- listing-item end-->							
+                            <!-- listing-item end-->
                         </div>
-                        <!-- slick-slide-item end-->									
+                        <!-- slick-slide-item end-->
                         <!-- slick-slide-item -->
                         <div class="slick-slide-item">
                             <!-- listing-item -->
@@ -479,9 +479,9 @@
                                     </div>
                                 </article>
                             </div>
-                            <!-- listing-item end-->							
+                            <!-- listing-item end-->
                         </div>
-                        <!-- slick-slide-item end-->									
+                        <!-- slick-slide-item end-->
                         <!-- slick-slide-item -->
                         <div class="slick-slide-item">
                             <!-- listing-item -->
@@ -524,9 +524,9 @@
                                     </div>
                                 </article>
                             </div>
-                            <!-- listing-item end-->							
+                            <!-- listing-item end-->
                         </div>
-                        <!-- slick-slide-item end-->								
+                        <!-- slick-slide-item end-->
                     </div>
                     <div class="swiper-button-prev lc-wbtn lc-wbtn_prev"><i class="far fa-angle-left"></i></div>
                     <div class="swiper-button-next lc-wbtn lc-wbtn_next"><i class="far fa-angle-right"></i></div>

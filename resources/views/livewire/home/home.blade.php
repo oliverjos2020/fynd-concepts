@@ -76,7 +76,7 @@
                             {{-- <p>Follow the guidelines below to successfully set up your service providing account:</p> --}}
                             <div class="custom-form">
                                 <label>Business Name<span class="dec-icon"><i class="far fa-user"></i></span></label>
-                                <input type="text" placeholder="Example: AE Ventures" wire:model="business_name">
+                                <input type="text" placeholder="Example:AE Ventures" wire:model="business_name">
                                 @error('business_name')
                                     <label class="text-danger"> {{ $message }} </label>
                                 @enderror

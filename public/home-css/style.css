@@ -65,6 +65,19 @@ body {
             transform: rotate(360deg);
   }
 }
+.my-select{
+    width: 100%;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid lavender;
+    background: ghostwhite;
+    color:#7d93b2;
+}
+.my-label{
+    color:#7d93b2;
+    float:left;
+    margin:8px 0px 8px 0px;
+}
 .loader-inner {
   position: absolute;
   margin: -18px 0 0 -18px;

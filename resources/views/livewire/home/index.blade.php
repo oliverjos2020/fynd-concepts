@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="hero-notifer fl-wrap">Need more search options? <a
-                                        href="listing.html">Advanced Search</a> </div>
+                                        href="/listing">Advanced Search</a> </div>
                                 <div class="scroll-down-wrap">
                                     <div class="mousey">
                                         <div class="scroller"></div>
