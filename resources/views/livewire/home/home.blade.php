@@ -34,7 +34,7 @@
 
         </div>
         <div class="list-single-main-container fl-wrap">
-            @if(Auth::user()->is_profile_complete !== "1")
+            @if(Auth::user()->is_profile_complete !== "1" || 1==1)
                 @if($step == 1)
                     <div class="list-single-main-item fl-wrap">
                         <div class="list-single-main-item-title">
@@ -90,7 +90,7 @@
                                 <select wire:model="state">
                                     <option value="">Select State</option> <!-- Default option -->
                                     @forelse($states as $state)
-                                        <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                        <option value="{{ $state->slug }}">{{ $state->name }}</option>
                                     @empty
                                         <option value="">No states available</option>
                                     @endforelse

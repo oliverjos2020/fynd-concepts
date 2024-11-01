@@ -28,7 +28,7 @@ class Home extends Component
     public $work_address;
     public $bio;
     public $passport;
-    public $id_doc; 
+    public $id_doc;
     public $work_images = [];
 
     public function updatedState($stateId)

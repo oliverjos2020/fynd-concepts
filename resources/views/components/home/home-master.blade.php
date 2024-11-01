@@ -56,7 +56,14 @@
                 <!-- header-search button end  -->
                 <!--  add new  btn -->
                 <div class="add-list_wrap">
-                    <a href="/authenticate" class="add-list color-bg"><i class="fas fa-user"></i> <span>Sign Up | Sign In </span></a>
+                    @if(!Auth::check())
+                        <a href="/authenticate" class="add-list color-bg"><i class="fas fa-user"></i> <span>Sign Up | Sign In </span></a>
+                    @else
+                    <form method="POST" action="{{ route('logout') }}" >
+                        @csrf
+                        <button class="add-list color-bg" style="border:none"><i class="fal fa-power-off"></i> <span>Logout</span></button>
+                    </form>
+                    @endif
                 </div>
                 <!--  add new  btn end -->
                 <!--  header-opt_btn -->

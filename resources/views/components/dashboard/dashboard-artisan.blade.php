@@ -283,7 +283,7 @@
                                 <h3>Main</h3>
                                 <ul class="no-list-style">
                                     <li><a href="/home" class="user-profile-act"><i class="fal fa-chart-line"></i>Dashboard</a></li>
-                                    <li><a href="dashboard-myprofile.html"><i class="fal fa-user-edit"></i> Edit profile</a></li>
+                                    <li><a href="/"><i class="fal fa-user-edit"></i> My profile</a></li>
                                     <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
                                     <li><a href="dashboard-agents.html"><i class="fal fa-users"></i> Agents List</a></li>
                                     <li>

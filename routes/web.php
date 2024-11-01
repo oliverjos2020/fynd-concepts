@@ -2,15 +2,18 @@
 
 use App\Http\Livewire\Home;
 use App\Http\Livewire\Index;
+use App\Http\Livewire\Listing;
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\MyProfile;
 use App\Http\Livewire\LGAManagement;
+use App\Http\Livewire\SingleArtisan;
 use App\Http\Livewire\RegisterClient;
-use App\Http\Livewire\RoleManagement;
-use App\Http\Livewire\UserManagement;
-use Illuminate\Support\Facades\Route;
 // use App\Http\Livewire\ClientManagement;
 // use App\Http\Livewire\SingleClient;
 // use App\Http\Livewire\EditClient;
+use App\Http\Livewire\RoleManagement;
+use App\Http\Livewire\UserManagement;
+use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\StateManagement;
 use App\Http\Livewire\ServiceManagement;
 use App\Http\Livewire\UserAuthentication;
@@ -18,8 +21,6 @@ use App\Http\Controllers\ArtisanController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserAPIController;
 use App\Http\Livewire\SubServiceManagement;
-use App\Http\Livewire\SingleArtisan;
-use App\Http\Livewire\Listing;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Route::middleware(['auth', 'checkStatus'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', Home::class)->name('home');
+    Route::get('/profile/{user}', MyProfile::class)->name('profile');
     Route::get('/role', RoleManagement::class)->name('role');
     Route::get('/service', ServiceManagement::class)->name('service');
     Route::get('/state', StateManagement::class)->name('state');

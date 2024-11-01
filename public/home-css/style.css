@@ -78,6 +78,11 @@ body {
     float:left;
     margin:8px 0px 8px 0px;
 }
+.my-warning{
+    color: #fff;
+    background: tomato;
+    padding: 8px;
+}
 .loader-inner {
   position: absolute;
   margin: -18px 0 0 -18px;

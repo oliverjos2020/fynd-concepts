@@ -53,7 +53,7 @@
                                     <select wire:model="state" class="my-select">
                                         <option value="">Select State</option>
                                         @forelse ($states as $state)
-                                            <option value="{{$state->name}}">{{$state->name}}</option>
+                                            <option value="{{$state->slug}}">{{$state->name}}</option>
                                         @empty
 
                                         @endforelse
@@ -65,42 +65,40 @@
                                     <select class="my-select" wire:model="lga">
                                         <option value="">Select lga</option>
                                         @forelse ($lgas as $lga)
-                                            <option value="{{$lga->id}}">{{$lga->name}}</option>
+                                            <option value="{{$lga->slug}}">{{$lga->name}}</option>
                                         @empty
 
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="listsearch-input-item" wire:ignore>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label>Service</label>
-                                            <select data-placeholder="All Cities" class="chosen-select on-radius no-search-select" >
-                                                <option>Select a Service</option>
-                                                @forelse ($services as $service)
-                                                    <option value="{{$service->id}}">{{$service->service}}</option>
-                                                @empty
 
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    <br>
-                                        <div class="col-sm-12" style="margin-top:9px;" wire:ignore>
-                                            <label>Sub Service</label>
-                                            <select data-placeholder="Categories" class="chosen-select on-radius no-search-select" >
-                                                <option>Select Subservice </option>
-                                                <@forelse ($subservices as $subservice)
-                                                    <option value="{{$subservice->id}}">{{$subservice->subservice}}</option>
-                                                @empty
+                                <div>
+                                    <label class="my-label">Service</label>
+                                    <select class="my-select" wire:model="service">
+                                        <option value="">Select a Service</option>
+                                        @forelse ($services as $service)
+                                            <option value="{{$service->slug}}">{{$service->service}}</option>
+                                        @empty
 
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                    </div>
+                                        @endforelse
+                                    </select>
                                 </div>
+                                <div>
+                                    <label class="my-label">Sub Service</label>
+                                    <select class="my-select" wire:model="subservice">
+                                        <option value="">Select a Service</option>
+                                        <@forelse ($subservices as $subservice)
+                                                <option value="{{$subservice->slug}}">{{$subservice->subservice}}</option>
+                                            @empty
+
+                                            @endforelse
+                                    </select>
+                                </div>
+
+
                                 <div class="msotw_footer">
-                                    <a wire:click="search" class="btn small-btn float-btn color-bg">Search</a>
-                                    <div class="reset-form reset-btn"> <i class="far fa-sync-alt"></i> Reset Filters</div>
+                                    {{-- <a class="btn small-btn float-btn color-bg">Search</a> --}}
+                                    <div wire:click="resetFilter" class="reset-form reset-btn"> <i class="far fa-sync-alt"></i> Reset Filters</div>
                                 </div>
                             </div>
                             {{-- <a class="back-tofilters color-bg custom-scroll-link fl-wrap scroll-to-fixed-fixed" href="#filters-column">Back to filters <i class="fas fa-caret-up"></i></a> --}}
@@ -185,6 +183,9 @@
                                     </article>
                                 </div>
                             @empty
+                            <div class="col-md-12 my-warning">
+                                No record available
+                            </div>
                             @endforelse
                         </div>
                         <!-- listing-item-wrap end-->
