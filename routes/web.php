@@ -21,6 +21,7 @@ use App\Http\Livewire\RoleManagement;
 use App\Http\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\StateManagement;
+use App\Http\Livewire\TopicManagement;
 use App\Http\Livewire\PushNotification;
 use App\Http\Livewire\ReportManagement;
 use App\Http\Livewire\ServiceManagement;
@@ -108,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/register-client', RegisterClient::class)->name('registerClient');
     Route::get('/favorite', MyFavorite::class)->name('favorite');
     Route::get('/send-push-notification', PushNotification::class)->name('pushNotification');
+    Route::get('/topic', TopicManagement::class)->name('topicManagement');
     Route::middleware('can:admin-only')->group(function () {
         Route::get('/users', UserManagement::class)->name('userSetup');
         Route::get('/profile/{userID}', Profile::class)->name('userProfile');

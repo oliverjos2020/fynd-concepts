@@ -25,6 +25,21 @@
                     </div>
 
                     <div class="form-group mt-2">
+                        <label for="topic">Topic</label>
+                        <select wire:model="topic" class="form-control">
+                            <option value="">Select a topic</option>
+                        @forelse ($topics as $topic)
+                            <option value="{{$topic->topic}}">{{$topic->topic}}</option>
+                        @empty
+
+                        @endforelse
+                        </select>
+                        @error('topic')
+                        <span class="text-danger"> {{ $message }} </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group mt-2">
                         <label for="state">Body</label>
                         <textarea wire:model.debounce.500ms="body" placeholder="body" cols="30" rows="10" class="form-control"></textarea>
                         @error('body')
@@ -65,6 +80,7 @@
                                 <tr>
                                     <th>#ID</th>
                                     <th>Title</th>
+                                    <th>Topic</th>
                                     <th>Body</th>
                                     <th>Action</th>
 
@@ -75,6 +91,7 @@
                                 <tr>
                                     <td>{{ ($notifications->currentPage() - 1) * $notifications->perPage() + $loop->iteration }}</td>
                                     <td>{{ $notification->title }}</td>
+                                    <td>{{ $notification->topic }}</td>
                                     <td>{{ Str::limit($notification->body, 35, '...') }}</td>
                                     <td>
                                         <a class="btn btn-primary btn-sm text-light" style="cursor:pointer;" wire:click="edit({{$notification->id}})">
@@ -92,6 +109,16 @@
                                 <tr>
                                     <td colspan="4">
                                         {{$editingTitle}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <strong>Topic</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        {{$editingTopic}}
                                     </td>
                                 </tr>
                                 <tr>

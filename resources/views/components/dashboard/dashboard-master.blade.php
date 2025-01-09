@@ -243,11 +243,15 @@
                                     <span>Reports</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="/send-push-notification" class="waves-effect">
+                            <li class="mm-active">
+                                <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
                                     <i class="mdi mdi-tag-outline"></i>
-                                    <span>Send Push Notification</span>
+                                    <span>Push Notification</span>
                                 </a>
+                                <ul class="sub-menu mm-collapse mm-show" aria-expanded="false" style="">
+                                    <li><a href="/topic">Notification Topics</a></li>
+                                    <li><a href="/send-push-notification">Push Notification</a></li>
+                                </ul>
                             </li>
 
 

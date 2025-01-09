@@ -5,8 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SendPushNotification extends Model
+class Topic extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'topic', 'body'];
+    protected $fillable = [
+        'topic',
+        'slug'
+    ];
 }

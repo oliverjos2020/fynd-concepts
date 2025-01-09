@@ -3,20 +3,19 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use App\Models\Role;
+use App\Models\Topic;
 use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Exception;
 
-
-class RoleManagement extends Component
+class TopicManagement extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $search;
-    public $role;
+    public $topic;
+    public $editingTopic;
     public $editingID;
-    public $editingrole;
     public $limit = '10';
 
     protected $queryString = ['limit', 'search'];
@@ -31,21 +30,20 @@ class RoleManagement extends Component
         $this->resetPage();
     }
 
-
-    public function createRole()
+    public function createTopic()
     {
         $validated = $this->validate([
-            'role' => ['required', 'unique:roles,role', 'min:2', 'max:50']
+            'topic' => ['required', 'unique:topics,topic', 'min:2', 'max:50']
         ]);
         try{
-        Role::create([
-            'role' => $this->role,
-            'slug'=>Str::of(Str::lower($this->role))->slug('-')
+            Topic::create([
+            'topic' => $this->topic,
+            'slug'=>Str::of(Str::lower($this->topic))->slug('-')
         ]);
-        $this->reset(['role']);
+        $this->reset(['topic']);
         $this->dispatchBrowserEvent('notify', [
             'type' => 'success',
-            'message' => 'Role Created Successfully',
+            'message' => 'Topic Created Successfully',
         ]);
         } catch (Exception $e) {
             $this->dispatchBrowserEvent('notify', [
@@ -59,21 +57,21 @@ class RoleManagement extends Component
     public function edit($id)
     {
         $this->editingID = $id;
-        $this->editingrole = Role::find($id)->role;
+        $this->editingTopic = Topic::find($id)->topic;
     }
 
     public function cancelEdit()
     {
-        $this->reset('editingID', 'editingrole');
+        $this->reset('editingID', 'editingTopic');
     }
 
     public function update()
     {
         try {
-            $this->validateOnly('editingrole', ['editingrole' => 'required']);
-            Role::find($this->editingID)->update([
-                'role' => $this->editingrole,
-                'slug' => Str::slug($this->editingrole)
+            $this->validateOnly('editingTopic', ['editingTopic' => 'required']);
+            Topic::find($this->editingID)->update([
+                'topic' => $this->editingTopic,
+                'slug' => Str::slug($this->editingTopic)
             ]);
             $this->cancelEdit();
         }catch(Exception $e){
@@ -88,8 +86,7 @@ class RoleManagement extends Component
     public function delete($id)
     {
         try{
-            Role::findOrfail($id)->delete();
-            session()->flash('delete', 'Deleted Successfully');
+            Topic::findOrfail($id)->delete();
             $this->dispatchBrowserEvent('notify', [
                 'type' => 'error',
                 'message' => 'Deleted Successfully',
@@ -106,15 +103,10 @@ class RoleManagement extends Component
 
     public function render()
     {
-        // return view('livewire.role', ['roles' => Role::latest()->where('role', 'like', "%{$this->search}%")->paginate($this->limit)])->layout('components.dashboard.dashboard-master');
-        $roles = Role::query()
-        ->where('role', 'like', '%' . $this->search . '%')
-        ->latest()
-        ->paginate($this->limit);
+        $topics = Topic::query()->where('topic', 'like', '%' . $this->search . '%')->latest()->paginate($this->limit);
 
-    return view('livewire.role', [
-        'roles' => $roles,
-    ])->layout('components.dashboard.dashboard-master');
-
+        return view('livewire.topic-management', [
+            'topics' => $topics,
+        ])->layout('components.dashboard.dashboard-master');;
     }
 }
