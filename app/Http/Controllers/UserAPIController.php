@@ -84,7 +84,7 @@ class UserAPIController extends Controller
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phone_no' => ['required', 'max:15', 'unique:users'],
                 'role_id' => ['required'],
-                'state_id' => ['required'],
+                // 'state_id' => ['sometimes'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
