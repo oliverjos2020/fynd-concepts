@@ -119,7 +119,7 @@ class UserManagement extends Component
     public function changeStatus($user, $value)
     {
         User::find($user)->update([
-            'status' => $value
+            'lock_user' => $value
         ]);
         $status = ($value == 1) ? 'Locked' : 'Unlocked';
         $this->dispatchBrowserEvent('notify', [
@@ -149,7 +149,7 @@ class UserManagement extends Component
     }
     public function render()
     {
-        $userManagement = User::where('name', 'like', '%' . $this->search . '%')->latest()->paginate($this->limit);
+        $userManagement = User::where('name', 'like', '%' . $this->search . '%')->where('role_id', 3)->latest()->paginate($this->limit);
         $roles = Role::all();
         return view('livewire.user-management', [
             'users' => $userManagement, 'roles' => $roles

@@ -66,7 +66,25 @@ class User extends Authenticatable implements JWTSubject
     public function role(){
         return $this->belongsTo(Role::class);
     }
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class, 'artisan_id');
+    }
 
+    public function myFavorites()
+{
+    return $this->hasMany(Favorite::class, 'user_id');
+}
+
+    // public function reviewsGiven()
+    // {
+    //     return $this->hasMany(Review::class, 'user_id');
+    // }
+
+    // public function reviewsReceived()
+    // {
+    //     return $this->hasMany(Review::class, 'artisan_id');
+    // }
 
     /**
      * The attributes that should be cast.

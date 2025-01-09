@@ -35,6 +35,7 @@ class Home extends Component
     {
         $this->lgas = LGA::where('state_id', $stateId)->get(); // Get LGAs based on the selected state
         $this->lga = null; // Reset the LGA selection
+        // dd($this->lgas);
     }
     public function updatedService($serviceId)
     {
@@ -133,6 +134,7 @@ class Home extends Component
             'type' => 'success',
             'message' => 'Profile Updated Successfully',
         ]);
+        return redirect()->back();
 
     }
     public function render()

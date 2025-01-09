@@ -77,6 +77,7 @@ class UserAuthentication extends Component
 
             if (Auth::attempt(['email' => $this->loginEmail, 'password' => $this->loginPassword], $this->remember)) {
                 $user = User::where('email', $this->loginEmail)->first();
+                
                 if ($user->role_id == 1) {
                     return redirect(RouteServiceProvider::HOME); // Redirect to dashboard for admin
                 } elseif ($user->role_id == 2) {
@@ -162,6 +163,30 @@ class UserAuthentication extends Component
                 'message' => 'OTP must be exactly 6 digits.',
             ]);
             return; // Exit the method after dispatching the error
+        }
+    }
+
+    function resendOtp()
+    {
+        try {
+            $user = User::where('email', $this->email)->first();
+            if ($user) {
+                $otp = $this->generateOTP();
+                $user->otp = $otp;
+                $user->save();
+
+                Mail::to($user->email)->send(new SendOtpMail($otp, $this->name));
+                $this->dispatchBrowserEvent('notify', [
+                    'type' =>'success',
+                    'message' => 'An OTP has been sent to your email',
+                ]);
+            }
+        } catch (Exception $e) {
+            $this->dispatchBrowserEvent('notify', [
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ]);
+            return;
         }
     }
 

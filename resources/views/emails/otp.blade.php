@@ -59,7 +59,7 @@
             <p>Best regards,<br>Fynd Concepts</p>
         </div>
         <div class="footer">
-            <p>&copy; {{ date('Y') }} Fynd-Concepts. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} Fynd Concepts. All rights reserved.</p>
         </div>
     </div>
 </body>

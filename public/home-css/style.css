@@ -1294,7 +1294,7 @@ nav li ul a:before , nav li ul a:after {
     border: 1px solid #80808029;
     padding: 20px;
     text-align: center;
-    width: 300px;
+    width: 400px;
     margin: 300px auto
 }
 .otp-container h2{
@@ -6509,7 +6509,7 @@ section.single-par2  .scroll-down-wrap{
     font-size: 14px;
 }
 .text-carousel-item-header {
-	padding:0 0 20px 80px;
+	/* padding:0 0 20px 80px; */
 	margin-bottom: 20px;
 }
 .popup-avatar {

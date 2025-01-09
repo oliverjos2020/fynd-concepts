@@ -116,7 +116,7 @@
                             <!-- list-main-wrap-opt-->
                             <div class="list-main-wrap-opt">
                                 <!-- price-opt-->
-                                <div class="price-opt" wire:ignore>
+                                {{-- <div class="price-opt" wire:ignore>
                                     <span class="price-opt-title">Sort   by:</span>
                                     <div class="listsearch-input-item">
                                         <select data-placeholder="Popularity" class="chosen-select no-search-select" >
@@ -126,7 +126,7 @@
                                             <option>Price: high to low</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- price-opt end-->
                                 <!-- price-opt-->
                                 <div class="grid-opt">
@@ -162,8 +162,12 @@
                                             <ul class="list-single-opt_header_cat">
                                                 <li><a href="#" class="cat-opt blue-bg">{{$user->service->service ?? ''}}</a></li>
                                             </ul>
-                                            <a href="#" class="geodir_save-btn tolt" data-microtip-position="left"
-                                                data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
+
+                                            <a wire:click="addFavorite({{$user->id}}, {{$user->is_favorite ? 1 : 0 }})" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="{{ $user->is_favorite ? 'Remove' : 'Add'}}">
+                                                <span>
+                                                    <i class="{{ $user->is_favorite ? 'fa fa-heart' : 'fal fa-heart'}}"></i>
+                                                </span>
+                                            </a>
                                             <div class="geodir-category-listing_media-list">
                                                 <span><i class="fas fa-camera"></i> {{$user->photos->count()}}</span>
                                             </div>
@@ -173,11 +177,26 @@
                                             <p>{{ Str::limit($user->bio, 135, '...') }}</p>
 
                                             <div class="geodir-category-footer fl-wrap">
-                                                <a href="/" class="gcf-company"><img
-                                                        src="{{url($user->passport ?? 'logo/logo-blue.png')}}" alt=""><span>By {{$user->name}}</span></a>
-                                                <div class="listing-rating card-popup-rainingvis tolt"
-                                                    data-microtip-position="top" data-tooltip="Good"
-                                                    data-starrating2="4"></div>
+                                                <a href="/" class="gcf-company">
+                                                    @php
+                                                        $averageRating = App\Models\Review::where('artisan_id', $user->id)->avg('rating');
+                                                        $myrating = round($averageRating, 1);
+                                                        $rating = " ";
+                                                        if($myrating <= 1){
+                                                            $rating = 'Unrated';
+                                                        }elseif($myrating <= 2){
+                                                            $rating = 'Fair';
+                                                        }elseif($myrating <= 3){
+                                                            $rating = 'Average';
+                                                        }elseif($myrating <= 4){
+                                                            $rating = 'Good';
+                                                        }elseif($myrating >= 5){
+                                                            $rating = 'Excellent';
+                                                        }
+                                                    @endphp
+                                                    <img src="{{url($user->passport ?? 'logo/logo-blue.png')}}" alt=""><span>By {{$user->name}}</span></a>
+                                                <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="{{$rating}}"
+                                                    data-starrating2="{{$myrating}}"></div>
                                             </div>
                                         </div>
                                     </article>

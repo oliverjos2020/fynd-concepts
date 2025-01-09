@@ -24,8 +24,9 @@
     <link href="{{asset('assets/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
 
     <link href="{{asset('css/toastr.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    <script src="{{asset('js/highChart.js')}}"></script>
     {{-- <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}&libraries=places"></script> --}}
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+    {{-- <script src="https://code.highcharts.com/highcharts.js"></script> --}}
     @livewireStyles
 <style>
     input, select, textarea {
@@ -208,19 +209,19 @@
                             </li>
                             <li>
                                 <a href="/subservice" class="waves-effect">
-                                    <i class="mdi mdi-hexagon-multiple-outline"></i>
+                                    <i class="mdi mdi-tag-minus-outline"></i>
                                     <span>Sub Service</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="/state" class="waves-effect">
-                                    <i class="mdi mdi-hexagon-multiple-outline"></i>
+                                    <i class="mdi mdi-layers-triple-outline"></i>
                                     <span>State</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="/lga" class="waves-effect">
-                                    <i class="mdi mdi-hexagon-multiple-outline"></i>
+                                    <i class="mdi mdi-longitude"></i>
                                     <span>LGA</span>
                                 </a>
                             </li>
@@ -230,33 +231,28 @@
                                     <span>User Management</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="/user-artisans" class="waves-effect">
+                                    <i class="mdi mdi-account-multiple-plus-outline"></i>
+                                    <span>Artisans</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/reports" class="waves-effect">
+                                    <i class="mdi mdi-account-multiple-plus-outline"></i>
+                                    <span>Reports</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/send-push-notification" class="waves-effect">
+                                    <i class="mdi mdi-tag-outline"></i>
+                                    <span>Send Push Notification</span>
+                                </a>
+                            </li>
 
 
                             @elseif(Auth::user()->role_id == 2)
-                                <li>
-                                    <a href="/dashboard2" class="waves-effect">
-                                        <i class="mdi mdi-airplay"></i>
-                                        <span>Dashboard</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/register-client" class="waves-effect">
-                                        <i class="mdi mdi-account-supervisor-outline"></i>
-                                        <span>Create Client</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                        <i class="mdi mdi-account-supervisor-outline"></i>
-                                        <span>Clients</span>
-                                    </a>
-                                    <ul class="sub-menu" aria-expanded="false">
-                                        <li><a href="/client-management/all">All Clients</a></li>
-                                        <li><a href="/client-management/local">Local Clients</a></li>
-                                        <li><a href="/client-management/international">International Clients</a></li>
-                                        <li><a href="/client-management/other">Other Clients </a></li>
-                                    </ul>
-                                </li>
+
                             @endif
 
 
@@ -348,6 +344,7 @@
 
     <script src="{{asset('assets/js/app.js')}}"></script>
     <script src="{{asset('js/toastr.min.js')}}"></script>
+
 
 
    <script>

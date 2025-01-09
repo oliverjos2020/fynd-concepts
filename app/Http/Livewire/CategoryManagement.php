@@ -57,7 +57,7 @@ class CategoryManagement extends Component
         } catch (Exception $e) {
             $this->dispatchBrowserEvent('notify', [
                 'type' => 'error',
-                'message' => $e->getMessage(),
+                'message' => $e->getMessage(),  
             ]);
             return;
         }

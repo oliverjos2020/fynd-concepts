@@ -41,7 +41,7 @@
                                                  @enderror
 
                                                 <div class="lost_password">
-                                                    <a href="#">Lost Your Password?</a>
+                                                    <a href="/forgot-password">Lost Your Password?</a>
                                                 </div>
                                                 <div class="filter-tags">
                                                     <input id="check-a3" type="checkbox" wire:model="remember">
@@ -122,42 +122,91 @@
                 </div>
             @endif
             @if ($step == 3)
-                <div class="otp-container">
-                    <h2>Enter OTP</h2>
-                    <div class="otp-inputs">
-                        <input type="text" maxlength="1" wire:model.lazy="otp.0" class="otp-input" autofocus>
-                        <input type="text" maxlength="1" wire:model.lazy="otp.1" class="otp-input">
-                        <input type="text" maxlength="1" wire:model.lazy="otp.2" class="otp-input">
-                        <input type="text" maxlength="1" wire:model.lazy="otp.3" class="otp-input">
-                        <input type="text" maxlength="1" wire:model.lazy="otp.4" class="otp-input">
-                        <input type="text" maxlength="1" wire:model.lazy="otp.5" class="otp-input">
-                    </div>
-                    <button class="proceed-button" wire:click="submitOtp">Confirm OTP</button>
-                </div>
-                <script>
-                    document.querySelectorAll('.otp-input').forEach((input, index) => {
-                        input.addEventListener('input', (e) => {
-                            if (input.value.length === 1 && index < 5) {
-                                // Move to the next input if a character is entered
-                                document.querySelectorAll('.otp-input')[index + 1].focus();
-                            } else if (input.value.length === 0 && index > 0) {
-                                // Move to the previous input if the current one is cleared
-                                document.querySelectorAll('.otp-input')[index - 1].focus();
-                            }
-                        });
 
-                        // Move focus to the next input on arrow right key press
-                        input.addEventListener('keydown', (e) => {
-                            if (e.key === 'ArrowRight' && index < 5) {
-                                document.querySelectorAll('.otp-input')[index + 1].focus();
-                            }
-                            // Move focus to the previous input on arrow left key press
-                            if (e.key === 'ArrowLeft' && index > 0) {
-                                document.querySelectorAll('.otp-input')[index - 1].focus();
-                            }
-                        });
+            <div class="otp-container">
+                <div class="alert alert-info">
+                    An OTP (One-Time Password) has been sent to your registered email address. Please check your inbox (and the spam folder) for the code.
+                    Use the OTP to verify your identity and complete your registration process.
+                </div>
+                <br><br><br>
+                <h2>Enter OTP</h2>
+                <div id="timer" class="timer">Time left: 1:00</div>
+                <div class="otp-inputs">
+                    <input type="text" maxlength="1" wire:model.lazy="otp.0" class="otp-input" autofocus>
+                    <input type="text" maxlength="1" wire:model.lazy="otp.1" class="otp-input">
+                    <input type="text" maxlength="1" wire:model.lazy="otp.2" class="otp-input">
+                    <input type="text" maxlength="1" wire:model.lazy="otp.3" class="otp-input">
+                    <input type="text" maxlength="1" wire:model.lazy="otp.4" class="otp-input">
+                    <input type="text" maxlength="1" wire:model.lazy="otp.5" class="otp-input">
+                </div>
+                <button class="proceed-button" wire:click="submitOtp">Confirm OTP</button>
+                <a id="resend-btn" class="resend-button" style="display: none; color: blue;" wire:click="resendOtp">Resend OTP</a>
+            </div>
+
+            <script>
+                let countdown; // Store the interval ID globally to manage it
+
+                function callTimer() {
+                    const timerElement = document.getElementById("timer");
+                    const resendButton = document.getElementById("resend-btn");
+                    let timeLeft = 60; // Set timer duration in seconds
+
+                    // Clear any existing timer before starting a new one
+                    if (countdown) clearInterval(countdown);
+
+                    // Display the timer and hide the resend button
+                    timerElement.style.display = "block";
+                    resendButton.style.display = "none";
+
+                    // Start the countdown
+                    countdown = setInterval(() => {
+                        if (timeLeft <= 0) {
+                            clearInterval(countdown);
+                            timerElement.style.display = "none"; // Hide the timer
+                            resendButton.style.display = "block"; // Show the resend button
+                        } else {
+                            const minutes = Math.floor(timeLeft / 60);
+                            const seconds = timeLeft % 60;
+                            timerElement.textContent = `Time left: ${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+                            timeLeft--;
+                        }
+                    }, 1000);
+                }
+
+                // Start the timer when the page loads
+                // document.addEventListener("DOMContentLoaded", () => {
+                    callTimer();
+
+                    // Restart the timer when the "Resend OTP" button is clicked
+                    document.getElementById("resend-btn").addEventListener("click", () => {
+                        callTimer();
                     });
-                </script>
+                // });
+
+                // OTP input navigation logic
+                document.querySelectorAll(".otp-input").forEach((input, index) => {
+                    input.addEventListener("input", (e) => {
+                        if (input.value.length === 1 && index < 5) {
+                            // Move to the next input if a character is entered
+                            document.querySelectorAll(".otp-input")[index + 1].focus();
+                        } else if (input.value.length === 0 && index > 0) {
+                            // Move to the previous input if the current one is cleared
+                            document.querySelectorAll(".otp-input")[index - 1].focus();
+                        }
+                    });
+
+                    // Move focus on arrow key navigation
+                    input.addEventListener("keydown", (e) => {
+                        if (e.key === "ArrowRight" && index < 5) {
+                            document.querySelectorAll(".otp-input")[index + 1].focus();
+                        }
+                        if (e.key === "ArrowLeft" && index > 0) {
+                            document.querySelectorAll(".otp-input")[index - 1].focus();
+                        }
+                    });
+                });
+            </script>
+
             @endif
         </div>
     </div>

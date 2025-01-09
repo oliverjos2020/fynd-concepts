@@ -100,7 +100,6 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Registered</th>
                                 <th>Status</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
@@ -112,10 +111,10 @@
                             <tr>
                                 <td>{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
                                 </td>
-                                <td><a href="/profile/{{ $user->id }}">{{ $user->name }}</a></td>
+                                <td><a>{{ $user->name }}</a></td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->role->role }}</td>
-                                <td>{{ $user->created_at->diffForHumans() }}</td>
+                                <td>{{ $user->role->role ?? '' }}</td>
+                               
                                 <td>
                                     @if($user->status == 0)
                                     <a class="btn btn-success btn-sm" wire:click="changeStatus({{$user->id}},'1')">Lock User</a>
@@ -139,7 +138,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </td>
-                                <td colspan="2">
+                                <td colspan="3">
                                     <input type="text" wire:model="editingEmail" placeholder="Email"
                                         class="form-control mx-1">
                                     @error('editingEmail')

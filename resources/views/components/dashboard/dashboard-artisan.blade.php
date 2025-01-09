@@ -3,11 +3,11 @@
 <head>
         <!--=============== basic  ===============-->
         <meta charset="UTF-8">
-        <title>Homeradar - Real Estate Listing Template</title>
+        <title>Fynd Concepts</title>
 
-        <meta name="robots" content="index, follow"/>
-        <meta name="keywords" content=""/>
-        <meta name="description" content=""/>
+        <meta name="robots" content="Fynd Concept"/>
+        <meta name="keywords" content="Fynd Concept"/>
+        <meta name="description" content="Fynd Concept"/>
         <!--=============== css  ===============-->
         <link type="text/css" rel="stylesheet" href="{{asset('home-css/plugins.css')}}">
         <link type="text/css" rel="stylesheet" href="{{asset('home-css/style.css')}}">
@@ -51,10 +51,10 @@
                 </div>
                 <!-- nav-button-wrap end-->
                 <!-- header-search button  -->
-                <div class="header-search-button">
+                {{-- <div class="header-search-button">
                     <i class="fal fa-search"></i>
                     <span>Search...</span>
-                </div>
+                </div> --}}
                 <!-- header-search button end  -->
                 <!--  add new  btn -->
                 <div class="add-list_wrap">
@@ -69,18 +69,18 @@
                 </div>
                 <!--  add new  btn end -->
                 <!--  header-opt_btn -->
-                <div class="header-opt_btn tolt" data-microtip-position="bottom"  data-tooltip="Language / Currency">
+                {{-- <div class="header-opt_btn tolt" data-microtip-position="bottom"  data-tooltip="Language / Currency">
                     <span><i class="fal fa-globe"></i></span>
-                </div>
+                </div> --}}
                 <!--  header-opt_btn end -->
                 <!--  cart-btn   -->
                 <div class="cart-btn  tolt show-header-modal" data-microtip-position="bottom"  data-tooltip="Your Wishlist / Compare">
-                    <i class="fal fa-bell"></i>
-                    <span class="cart-btn_counter color-bg">5</span>
+                    <i class="fal fa-heart"></i>
+                    <span class="cart-btn_counter color-bg" id="favorite-count">0</span>
                 </div>
                 <!--  cart-btn end -->
                 <!--  login btn -->
-                <div class="show-reg-form modal-open"><i class="fas fa-user"></i><span>Sign In</span></div>
+                {{-- <div class="show-reg-form modal-open"><i class="fas fa-user"></i><span>Sign In</span></div> --}}
                 <!--  login btn  end -->
                 <!--  navigation -->
                 <div class="nav-holder main-menu">
@@ -91,24 +91,23 @@
 
                             </li>
                             <li>
-                                <a href="#">About Us</a>
-
+                                <a href="/about">About Us</a>
                             </li>
                             <li>
-                                <a href="#">FAQ</a>
+                                <a href="/listing">Listing</a>
                             </li>
                             <li>
-                                <a href="#">Pricing</a>
+                                <a href="/faq">FAQ</a>
                             </li>
                             <li>
-                                <a href="#">Contact Us</a>
+                                <a href="/contact">Contact Us</a>
                             </li>
                         </ul>
                     </nav>
                 </div>
                 <!-- navigation  end -->
                 <!-- header-search-wrapper -->
-                <div class="header-search-wrapper novis_search">
+                {{-- <div class="header-search-wrapper novis_search">
                     <div class="header-serach-menu">
                         <div class="custom-switcher fl-wrap">
                             <div class="fieldset fl-wrap">
@@ -140,7 +139,7 @@
                             <button onclick="location.href='listing.html'" type="button"  class="btn float-btn color-bg"><i class="fal fa-search"></i> Search</button>
                         </form>
                     </div>
-                </div>
+                </div> --}}
                 <!-- header-search-wrapper end  -->
                 <!-- wishlist-wrap-->
                 <div class="header-modal novis_wishlist tabs-act">
@@ -283,10 +282,10 @@
                                 <h3>Main</h3>
                                 <ul class="no-list-style">
                                     <li><a href="/home" class="user-profile-act"><i class="fal fa-chart-line"></i>Dashboard</a></li>
-                                    <li><a href="/"><i class="fal fa-user-edit"></i> My profile</a></li>
-                                    <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
-                                    <li><a href="dashboard-agents.html"><i class="fal fa-users"></i> Agents List</a></li>
-                                    <li>
+                                    <li><a href="/profile"><i class="fal fa-user-edit"></i> My profile</a></li>
+                                    {{-- <li><a href="dashboard-messages.html"><i class="fal fa-envelope"></i> Messages <span>3</span></a></li>
+                                    <li><a href="dashboard-agents.html"><i class="fal fa-users"></i> Agents List</a></li> --}}
+                                    {{-- <li>
                                         <a href="#" class="submenu-link"><i class="fal fa-plus"></i>Submenu</a>
                                         <ul  class="no-list-style">
                                             <li><a href="#"><i class="fal fa-th-list"></i> Submenu 2 </a></li>
@@ -294,7 +293,7 @@
                                             <li><a href="#"><i class="fal fa-comments-alt"></i>Submenu 2</a></li>
                                             <li><a href="#"><i class="fal fa-file-plus"></i> Submenu 2</a></li>
                                         </ul>
-                                    </li>
+                                    </li> --}}
                                 </ul>
                             </div>
                             <!-- user-profile-menu end-->
@@ -302,10 +301,15 @@
                             <div class="user-profile-menu">
                                 <h3>Listings</h3>
                                 <ul  class="no-list-style">
-                                    <li><a href="dashboard-listing-table.html"><i class="fal fa-th-list"></i> My listigs  </a></li>
-                                    <li><a href="dashboard-bookings.html"> <i class="fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
-                                    <li><a href="dashboard-review.html"><i class="fal fa-comments-alt"></i> Reviews </a></li>
-                                    <li><a href="dashboard-add-listing.html"><i class="fal fa-file-plus"></i> Add New</a></li>
+                                    {{-- <li><a href="dashboard-listing-table.html"><i class="fal fa-th-list"></i> My listigs  </a></li>
+                                    <li><a href="dashboard-bookings.html"> <i class="fal fa-calendar-check"></i> Bookings <span>2</span></a></li> --}}
+                                    {{-- <li><a href="dashboard-review.html"><i class="fal fa-comments-alt"></i> Reviews </a></li> --}}
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <a href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();"><i class="fal fa-sign-out"></i> Logout</a>
+                                        </form>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- user-profile-menu end-->
@@ -337,6 +341,20 @@
          });
 
      </script>
+       <script>
+        document.addEventListener('livewire:load', function () {
+
+            window.Livewire.on('updateFavoriteCount', (newCount) => {
+            console.log('Favorite count updated:', newCount);
+
+            // Update the favorite count in the header dynamically
+            const favoriteCountElement = document.getElementById('favorite-count');
+                if (favoriteCountElement) {
+                    favoriteCountElement.textContent = newCount;
+                }
+            });
+        });
+    </script>
      {{-- @livewire('paypal-payment') --}}
      @livewireScripts
     </body>

@@ -4,7 +4,7 @@
         <!-- content -->
         <div class="content">
             <!--  section  -->
-            <section class="no-padding-section">
+            <section class="no-padding-section" wire:ignore>
                 <div class="hero-slider-wrap carousel-wrap fl-wrap">
                     <div class="hero-slider carousel">
                         <!-- hero-slider-item -->
@@ -46,11 +46,11 @@
                                         Handymen Finder
                                     </h2>
                                 </div>
-                                <div class="main-search-input-wrap shadow_msiw">
+                                <div class="main-search-input-wrap shadow_msiw" wire:ignore>
                                     <div class="main-search-input fl-wrap">
                                         <div class="main-search-input-item">
-                                            <input type="text" wire:model="search"
-                                                placeholder="What are you looking for?" value="" />
+                                            <input type="text" wire:model="keywords"
+                                                placeholder="What are you looking for?" />
                                         </div>
                                         {{-- <div class="main-search-input-item">
                                         <select data-placeholder="All Categories"  class="chosen-select no-search-select" >
@@ -69,13 +69,12 @@
                                                 @endforelse
                                             </select>
                                         </div>
-                                        <button class="main-search-button color-bg"
-                                            onclick="window.location.href='listing.html'"> Search <i
+                                        <button class="main-search-button color-bg" wire:click="search"> Search <i
                                                 class="far fa-search"></i> </button>
                                     </div>
                                 </div>
-                                <div class="hero-notifer fl-wrap">Need more search options? <a
-                                        href="/listing">Advanced Search</a> </div>
+                                <div class="hero-notifer fl-wrap">Need more search options? <a href="/listing">Advanced
+                                        Search</a> </div>
                                 <div class="scroll-down-wrap">
                                     <div class="mousey">
                                         <div class="scroller"></div>
@@ -140,12 +139,15 @@
                         </div>
                         <div class="col-md-8">
                             <div class="listing-filters gallery-filters">
-                                <a href="#" class="gallery-filter  gallery-filter-active" data-filter="*"><span>All Categories</span></a>
-                                    @forelse($services as $service)
-                                    <a href="#" class="gallery-filter" data-filter=".{{$service->slug}}"> <span>{{$service->service}}</span></a>
-                                    @empty
-                                    <a href="#" class="gallery-filter" data-filter=".for_sale"> <span>No Services</span></a>
-                                    @endforelse
+                                <a href="#" class="gallery-filter  gallery-filter-active"
+                                    data-filter="*"><span>All Categories</span></a>
+                                @forelse($services as $service)
+                                    <a href="#" class="gallery-filter" data-filter=".{{ $service->slug }}">
+                                        <span>{{ $service->service }}</span></a>
+                                @empty
+                                    <a href="#" class="gallery-filter" data-filter=".for_sale"> <span>No
+                                            Services</span></a>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -153,113 +155,93 @@
                     <!-- grid-item-holder-->
                     <div class="grid-item-holder gallery-items gisp fl-wrap">
                         @forelse($users as $user)
-                        <div class="gallery-item {{$user->service->slug ?? ''}}">
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="/artisan/{{$user->id}}" class="geodir-category-img_item">
-                                            <img src="{{ url($user->photos->first()->url?? 'logo/auto-logo.png') }}" alt="fynd concepts">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#" class="single-map-item tolt"
-                                                data-newlatitude="40.72956781" data-newlongitude="-73.99726866"
-                                                data-microtip-position="top-left" data-tooltip="On the map"><i
-                                                    class="fas fa-map-marker-alt"></i> <span> {{ Str::limit($user->work_address, 35, '...') }}
+                            <div class="gallery-item {{ $user->service->slug ?? '' }}">
+                                <div class="listing-item">
+                                    <article class="geodir-category-listing fl-wrap">
+                                        <div class="geodir-category-img fl-wrap">
+                                            <a href="/artisan/{{ $user->id }}" class="geodir-category-img_item">
+                                                <img src="{{ url($user->photos->first()->url ?? 'logo/auto-logo.png') }}"
+                                                    alt="fynd concepts">
+                                                <div class="overlay"></div>
+                                            </a>
+                                            <div class="geodir-category-location">
+                                                <a href="#" class="single-map-item tolt"
+                                                    data-newlatitude="40.72956781" data-newlongitude="-73.99726866"
+                                                    data-microtip-position="top-left" data-tooltip="On the map"><i
+                                                        class="fas fa-map-marker-alt"></i> <span>
+                                                        {{ Str::limit($user->work_address, 35, '...') }}
                                                     </span></a>
+                                            </div>
+                                            <ul class="list-single-opt_header_cat">
+                                                <li><a href="#"
+                                                        class="cat-opt blue-bg">{{ $user->service->service ?? '' }}</a>
+                                                </li>
+                                            </ul>
+                                            <a wire:click="addFavorite({{$user->id}}, {{$user->is_favorite ? 1 : 0 }})" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="{{ $user->is_favorite ? 'Remove' : 'Add'}}">
+                                                <span>
+                                                    <i class="{{ $user->is_favorite ? 'fa fa-heart' : 'fal fa-heart'}}"></i>
+                                                </span>
+                                            </a>
+                                            <div class="geodir-category-listing_media-list">
+                                                <span><i class="fas fa-camera"></i>
+                                                    {{ $user->photos->count() }}</span>
+                                            </div>
                                         </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">{{$user->service->service ?? ''}}</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left"
-                                            data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> {{$user->photos->count()}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3 class="title-sin_item"><a href="/artisan/{{$user->id}}">{{$user->business_name}}</a></h3>
-                                        <p>{{ Str::limit($user->bio, 135, '...') }}</p>
+                                        <div class="geodir-category-content fl-wrap">
+                                            <h3 class="title-sin_item"><a
+                                                    href="/artisan/{{ $user->id }}">{{ $user->business_name }}</a>
+                                            </h3>
+                                            <p>{{ Str::limit($user->bio, 135, '...') }}</p>
 
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="/" class="gcf-company"><img
-                                                    src="{{url($user->passport ?? 'logo/logo-blue.png')}}" alt=""><span>By {{$user->name}}</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt"
-                                                data-microtip-position="top" data-tooltip="Good"
-                                                data-starrating2="4"></div>
+                                            <div class="geodir-category-footer fl-wrap">
+                                                <a href="/" class="gcf-company">
+                                                    @php
+                                                        $averageRating = App\Models\Review::where(
+                                                            'artisan_id',
+                                                            $user->id,
+                                                        )->avg('rating');
+                                                        $myrating = round($averageRating, 1);
+                                                        $rating = ' ';
+                                                        if ($myrating <= 1) {
+                                                            $rating = 'Unrated';
+                                                        } elseif ($myrating <= 2) {
+                                                            $rating = 'Fair';
+                                                        } elseif ($myrating <= 3) {
+                                                            $rating = 'Average';
+                                                        } elseif ($myrating <= 4) {
+                                                            $rating = 'Good';
+                                                        } elseif ($myrating > 4) {
+                                                            $rating = 'Excellent';
+                                                        }
+                                                    @endphp
+                                                    <img src="{{ url($user->passport ?? 'logo/logo-blue.png') }}"
+                                                        alt=""><span>By {{ $user->name }}</span></a>
+                                                <div class="listing-rating card-popup-rainingvis tolt"
+                                                    data-microtip-position="top" data-tooltip="{{ $rating }}"
+                                                    data-starrating2="{{ $myrating }}"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
+                                    </article>
+                                </div>
                             </div>
-                        </div>
 
                         @empty
                         @endforelse
                     </div>
                     <!-- grid-item-holder-->
-                    <a href="listing.html" class="btn float-btn small-btn color-bg">View More artisans </a>
+                    <a href="/listing" class="btn float-btn small-btn color-bg">View More artisans </a>
                 </div>
             </section>
             <!-- section end-->
             <!-- section -->
-            <section>
-                <div class="container">
-                    <!--about-wrap -->
-                    <div class="about-wrap">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <div class="about-title ab-hero fl-wrap">
-                                    <h2>Why Choose Our Services </h2>
-                                    <h4>Check video presentation to find out more about us .</h4>
-                                </div>
-                                <div class="services-opions fl-wrap">
-                                    <ul>
-                                        <li>
-                                            <i class="fal fa-headset"></i>
-                                            <h4>24 Hours Support </h4>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                tempor incididunt ut labore et dolore magna aliqua.</p>
-                                        </li>
-                                        <li>
-                                            <i class="fal fa-users-cog"></i>
-                                            <h4>User Admin Panel</h4>
-                                            <p>Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt.
-                                                Curabitur convallis fringilla diam sed aliquam. </p>
-                                        </li>
-                                        <li>
-                                            <i class="fal fa-phone-laptop"></i>
-                                            <h4>Mobile Friendly</h4>
-                                            <p>Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa
-                                                faucibus feugiat. In fermentum facilisis massa.</p>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-6">
-                                <div class="about-img fl-wrap">
-                                    <img src="{{url('artisans/1.jpg')}}" class="respimg" alt="fynd-concept">
-                                    <div class="about-img-hotifer color-bg">
-                                        <p>Your website is fully responsive so visitors can view your content from their
-                                            choice of device.</p>
-                                        <h4>Mark Antony</h4>
-                                        <h5>Homeradar CEO</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- about-wrap end  -->
-                </div>
-            </section>
+
             <!-- section end-->
-            <section class="hidden-section no-padding-section">
+            <section class="hidden-section no-padding-section" wire:ignore>
                 <div class="half-carousel-wrap">
                     <div class="half-carousel-title color-bg">
                         <div class="half-carousel-title-item fl-wrap">
-                            <h2>Explore Best Cities</h2>
-                            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua.</h5>
+                            <h2>Explore Our Best Artisans</h2>
+                            <h5 style="text-align:justify!important;">From master carpenters to expert plumbers, our carefully selected artisans represent the finest in their trades. Discover skilled professionals who combine traditional craftsmanship with modern techniques to deliver exceptional results for your home.</h5>
                         </div>
                         <div class="pwh_bg"></div>
                     </div>
@@ -269,12 +251,12 @@
                             <div class="slick-item">
                                 <div class="half-carousel-item fl-wrap">
                                     <div class="bg-wrap bg-parallax-wrap-gradien">
-                                        <div class="bg" data-bg="{{url('artisans/1.jpg')}}"></div>
+                                        <div class="bg" data-bg="{{ url('artisans/1.jpg') }}"></div>
                                     </div>
                                     <div class="half-carousel-content">
-                                        <div class="hc-counter color-bg">26 Properties</div>
-                                        <h3><a href="listing.html">Explore NewYork</a></h3>
-                                        <p>Constant care and attention to the patients makes good record</p>
+                                        {{-- <div class="hc-counter color-bg">26 Properties</div> --}}
+                                        <h3><a href="/listing">Potter</a></h3>
+                                        {{-- <p>Constant care and attention to the patients makes good record</p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -283,12 +265,12 @@
                             <div class="slick-item">
                                 <div class="half-carousel-item fl-wrap">
                                     <div class="bg-wrap bg-parallax-wrap-gradien">
-                                        <div class="bg" data-bg="{{url('artisans/6.jpg')}}"></div>
+                                        <div class="bg" data-bg="{{ url('artisans/6.jpg') }}"></div>
                                     </div>
                                     <div class="half-carousel-content">
-                                        <div class="hc-counter color-bg">89 Properties</div>
-                                        <h3><a href="listing.html">Awesome London</a></h3>
-                                        <p>Constant care and attention to the patients makes good record</p>
+                                        {{-- <div class="hc-counter color-bg">89 Properties</div> --}}
+                                        <h3><a href="/listing">Carpenter</a></h3>
+                                        {{-- <p>Constant care and attention to the patients makes good record</p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -297,12 +279,12 @@
                             <div class="slick-item">
                                 <div class="half-carousel-item fl-wrap">
                                     <div class="bg-wrap bg-parallax-wrap-gradien">
-                                        <div class="bg" data-bg="{{url('artisans/3.jpg')}}"></div>
+                                        <div class="bg" data-bg="{{ url('artisans/3.jpg') }}"></div>
                                     </div>
                                     <div class="half-carousel-content">
-                                        <div class="hc-counter color-bg">102 Properties</div>
-                                        <h3><a href="listing.html">Find Dream in Paris</a></h3>
-                                        <p>Constant care and attention to the patients makes good record</p>
+                                        {{-- <div class="hc-counter color-bg">102 Properties</div> --}}
+                                        <h3><a href="/listing">Furniture Maker</a></h3>
+                                        {{-- <p>Constant care and attention to the patients makes good record</p> --}}
                                     </div>
                                 </div>
                             </div>
@@ -311,249 +293,73 @@
                             <div class="slick-item">
                                 <div class="half-carousel-item fl-wrap">
                                     <div class="bg-wrap bg-parallax-wrap-gradien">
-                                        <div class="bg" data-bg="{{url('artisans/4.jpg')}}"></div>
+                                        <div class="bg" data-bg="{{ url('artisans/4.jpg') }}"></div>
                                     </div>
                                     <div class="half-carousel-content">
-                                        <div class="hc-counter color-bg">51 Properties</div>
-                                        <h3><a href="listing.html">Elite Houses in Dubai</a></h3>
-                                        <p>Constant care and attention to the patients makes good record</p>
+                                        {{-- <div class="hc-counter color-bg">51 Properties</div> --}}
+                                        <h3><a href="/listing">Upholsterer</a></h3>
+                                        {{-- <p>Constant care and attention to the patients makes good record</p> --}}
                                     </div>
                                 </div>
                             </div>
                             <!--slick-item end -->
                         </div>
                     </div>
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    <!--about-wrap -->
+                    <div class="about-wrap">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="about-title ab-hero fl-wrap">
+                                    <h2>Why Choose Our Services </h2>
+                                    <h4 style="color:gray">We’ve put our user experience design expertise to work, both
+                                        in crafting exceptional experiences and in delivering top-tier handyman
+                                        solutions.</h4>
+                                </div>
+                                <div class="services-opions fl-wrap">
+                                    <ul>
+                                        <li>
+                                            <i class="fal fa-headset"></i>
+                                            <h4>Reliability </h4>
+                                            <p>Trust our handymen to show up on time, every time. We guarantee quality work with transparent pricing and clear communication.</p>
+                                        </li>
+                                        <li>
+                                            <i class="fal fa-users-cog"></i>
+                                            <h4>Skilled Professionals</h4>
+                                            <p>Every handyman on our platform is thoroughly vetted and certified in their trade. We ensure you get expert service from professionals who take pride in their craft. </p>
+                                        </li>
+                                        <li>
+                                            <i class="fal fa-phone-laptop"></i>
+                                            <h4>Experience</h4>
+                                            <p>With thousands of successfully completed projects across multiple specialties. Our handymen bring years of practical knowledge to solve any home maintenance challenge.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-6">
+                                <div class="about-img fl-wrap">
+                                    <img src="{{ url('artisans/1.jpg') }}" class="respimg" alt="fynd-concept">
+                                    <div class="about-img-hotifer color-bg">
+                                        <p>Every handyman listed on our platform has undergone a thorough verification
+                                            process. You can trust that the individuals you find here are genuine
+                                            experts in their respective fields.</p>
+                                        {{-- <h4>Mark Antony</h4> --}}
+                                        <h5>Fynd Concept Team</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- about-wrap end  -->
                 </div>
             </section>
             <!--section end-->
             <!-- section -->
-            <section>
-                <div class="container">
-                    <!-- section-title -->
-                    <div class="section-title st-center fl-wrap">
-                        <h4>The Best Agents</h4>
-                        <h2>Meet Our Agents</h2>
-                    </div>
-                    <!-- section-title end -->
-                    <div class="clearfix"></div>
-                    <div class="listing-carousel-wrapper lc_hero carousel-wrap fl-wrap">
-                        <div class="listing-carousel carousel ">
-                            <!-- slick-slide-item -->
-                            <div class="slick-slide-item">
-                                <!--  agent card item -->
-                                <div class="listing-item">
-                                    <article class="geodir-category-listing fl-wrap">
-                                        <div class="geodir-category-img fl-wrap  agent_card">
-                                            <a href="agent-single.html" class="geodir-category-img_item">
-                                                <img src="images/agency/agent/1.jpg" alt="">
-                                                <ul class="list-single-opt_header_cat">
-                                                    <li><span class="cat-opt color-bg">4 listings</span></li>
-                                                </ul>
-                                            </a>
-                                            <div class="agent-card-social fl-wrap">
-                                                <ul>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-facebook-f"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-twitter"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-instagram"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
-                                                <span class="re_stars-title">Excellent</span></div>
-                                        </div>
-                                        <div class="geodir-category-content fl-wrap">
-                                            <div class="card-verified tolt" data-microtip-position="left"
-                                                data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
-                                            <div class="agent_card-title fl-wrap">
-                                                <h4><a href="agent-single.html">Anna Lips</a></h4>
-                                                <h5><a href="agency-single.html">CondorHome RealEstate agency</a></h5>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
-                                                pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur
-                                                nulla.</p>
-                                            <div class="geodir-category-footer fl-wrap">
-                                                <a href="agent-single.html"
-                                                    class="btn float-btn color-bg small-btn">View Profile</a>
-                                                <a href="mailto:yourmail@email.com" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Write Message"><i
-                                                        class="fal fa-envelope"></i></a>
-                                                <a href="tel:123-456-7890" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Call Now"><i
-                                                        class="fal fa-phone"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <!--  agent card item end -->
-                            </div>
-                            <!-- slick-slide-item end-->
-                            <!-- slick-slide-item -->
-                            <div class="slick-slide-item">
-                                <!--  agent card item -->
-                                <div class="listing-item">
-                                    <article class="geodir-category-listing fl-wrap">
-                                        <div class="geodir-category-img fl-wrap  agent_card">
-                                            <a href="agent-single.html" class="geodir-category-img_item">
-                                                <img src="images/agency/agent/3.jpg" alt="">
-                                                <ul class="list-single-opt_header_cat">
-                                                    <li><span class="cat-opt color-bg">6 listings</span></li>
-                                                </ul>
-                                            </a>
-                                            <div class="agent-card-social fl-wrap">
-                                                <ul>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-facebook-f"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-twitter"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-instagram"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-vk"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="3">
-                                                <span class="re_stars-title">Average</span></div>
-                                        </div>
-                                        <div class="geodir-category-content fl-wrap">
-                                            <div class="card-verified cv_not tolt" data-microtip-position="left"
-                                                data-tooltip="Not Verified"><i class="fal fa-minus-octagon"></i></div>
-                                            <div class="agent_card-title fl-wrap">
-                                                <h4><a href="agent-single.html">Jane Kobart</a></h4>
-                                                <h5><a href="agency-single.html">Mavers RealEstate agency</a></h5>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
-                                                pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur
-                                                nulla.</p>
-                                            <div class="geodir-category-footer fl-wrap">
-                                                <a href="agent-single.html"
-                                                    class="btn float-btn color-bg small-btn">View Profile</a>
-                                                <a href="mailto:yourmail@email.com" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Write Message"><i
-                                                        class="fal fa-envelope"></i></a>
-                                                <a href="tel:123-456-7890" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Call Now"><i
-                                                        class="fal fa-phone"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <!--  agent card item end -->
-                            </div>
-                            <!-- slick-slide-item end-->
-                            <!-- slick-slide-item -->
-                            <div class="slick-slide-item">
-                                <!--  agent card item -->
-                                <div class="listing-item">
-                                    <article class="geodir-category-listing fl-wrap">
-                                        <div class="geodir-category-img fl-wrap  agent_card">
-                                            <a href="agent-single.html" class="geodir-category-img_item">
-                                                <img src="images/agency/agent/5.jpg" alt="">
-                                                <ul class="list-single-opt_header_cat">
-                                                    <li><span class="cat-opt color-bg">22 listings</span></li>
-                                                </ul>
-                                            </a>
-                                            <div class="agent-card-social fl-wrap">
-                                                <ul>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-facebook-f"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-twitter"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-instagram"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-vk"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="5">
-                                                <span class="re_stars-title">Excellent
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="geodir-category-content fl-wrap">
-                                            <div class="card-verified tolt" data-microtip-position="left"
-                                                data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
-                                            <div class="agent_card-title fl-wrap">
-                                                <h4><a href="agent-single.html">Bill Trust</a></h4>
-                                                <h5><a href="agency-single.html">Your Sweet Home agency</a></h5>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
-                                                pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur
-                                                nulla.</p>
-                                            <div class="geodir-category-footer fl-wrap">
-                                                <a href="agent-single.html"
-                                                    class="btn float-btn color-bg small-btn">View Profile</a>
-                                                <a href="mailto:yourmail@email.com" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Write Message"><i
-                                                        class="fal fa-envelope"></i></a>
-                                                <a href="tel:123-456-7890" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Call Now"><i
-                                                        class="fal fa-phone"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <!--  agent card item end -->
-                            </div>
-                            <!-- slick-slide-item end-->
-                            <!-- slick-slide-item -->
-                            <div class="slick-slide-item">
-                                <!--  agent card item -->
-                                <div class="listing-item">
-                                    <article class="geodir-category-listing fl-wrap">
-                                        <div class="geodir-category-img fl-wrap  agent_card">
-                                            <a href="agent-single.html" class="geodir-category-img_item">
-                                                <img src="images/agency/agent/6.jpg" alt="">
-                                                <ul class="list-single-opt_header_cat">
-                                                    <li><span class="cat-opt color-bg">12 listings</span></li>
-                                                </ul>
-                                            </a>
-                                            <div class="agent-card-social fl-wrap">
-                                                <ul>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-facebook-f"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-twitter"></i></a></li>
-                                                    <li><a href="#" target="_blank"><i
-                                                                class="fab fa-instagram"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="4">
-                                                <span class="re_stars-title">Good</span></div>
-                                        </div>
-                                        <div class="geodir-category-content fl-wrap">
-                                            <div class="card-verified tolt" data-microtip-position="left"
-                                                data-tooltip="Verified"><i class="fal fa-user-check"></i></div>
-                                            <div class="agent_card-title fl-wrap">
-                                                <h4><a href="agent-single.html">Martin Smith</a></h4>
-                                                <h5><a href="agency-single.html">Mavers RealEstate agency</a></h5>
-                                            </div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in
-                                                pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur
-                                                nulla.</p>
-                                            <div class="geodir-category-footer fl-wrap">
-                                                <a href="agent-single.html"
-                                                    class="btn float-btn color-bg small-btn">View Profile</a>
-                                                <a href="mailto:yourmail@email.com" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Write Message"><i
-                                                        class="fal fa-envelope"></i></a>
-                                                <a href="tel:123-456-7890" class="tolt ftr-btn"
-                                                    data-microtip-position="left" data-tooltip="Call Now"><i
-                                                        class="fal fa-phone"></i></a>
-                                            </div>
-                                        </div>
-                                    </article>
-                                </div>
-                                <!--  agent card item end -->
-                            </div>
-                            <!-- slick-slide-item end-->
-                        </div>
-                        <div class="swiper-button-prev lc-wbtn lc-wbtn_prev"><i class="far fa-angle-left"></i></div>
-                        <div class="swiper-button-next lc-wbtn lc-wbtn_next"><i class="far fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </section>
+
             <!-- section end-->
             <!-- section -->
             <section class="color-bg small-padding">
@@ -564,10 +370,10 @@
                             <div class="inline-facts">
                                 <div class="milestone-counter">
                                     <div class="stats animaper">
-                                        <div class="num" data-content="0" data-num="578">0</div>
+                                        <div class="num" data-content="0" data-num="70">0+</div>
                                     </div>
                                 </div>
-                                <h6>Agents and Agencys</h6>
+                                <h6>Artisans</h6>
                             </div>
                         </div>
                         <!-- inline-facts end -->
@@ -576,10 +382,10 @@
                             <div class="inline-facts">
                                 <div class="milestone-counter">
                                     <div class="stats animaper">
-                                        <div class="num" data-content="0" data-num="12168">0</div>
+                                        <div class="num" data-content="0" data-num="100">0+</div>
                                     </div>
                                 </div>
-                                <h6>Happy Customers Every Year</h6>
+                                <h6>Customers</h6>
                             </div>
                         </div>
                         <!-- inline-facts end -->
@@ -588,10 +394,10 @@
                             <div class="inline-facts">
                                 <div class="milestone-counter">
                                     <div class="stats animaper">
-                                        <div class="num" data-content="0" data-num="2172">0</div>
+                                        <div class="num" data-content="0" data-num="120">0</div>
                                     </div>
                                 </div>
-                                <h6>Won Awards</h6>
+                                <h6>Services</h6>
                             </div>
                         </div>
                         <!-- inline-facts end -->
@@ -600,7 +406,7 @@
                             <div class="inline-facts">
                                 <div class="milestone-counter">
                                     <div class="stats animaper">
-                                        <div class="num" data-content="0" data-num="732">0</div>
+                                        <div class="num" data-content="0" data-num="10">0</div>
                                     </div>
                                 </div>
                                 <h6>New Listing Every Week</h6>
@@ -654,7 +460,7 @@
             </section>
             <!-- section end-->
             <!-- section -->
-            <section class="gray-bg ">
+            <section class="gray-bg" wire:ignore>
                 <div class="container">
                     <div class="section-title st-center fl-wrap">
                         <h4>Testimonilas</h4>
@@ -668,16 +474,14 @@
                         <div class="slick-item">
                             <div class="text-carousel-item fl-wrap">
                                 <div class="text-carousel-item-header fl-wrap">
-                                    <div class="popup-avatar"><img src="images/avatar/1.jpg" alt=""></div>
-                                    <div class="review-owner fl-wrap">Jessie Wilcox</div>
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
+                                    {{-- <div class="popup-avatar"><img src="images/avatar/1.jpg" alt=""></div> --}}
+                                    <div class="review-owner fl-wrap">Ngozi Peters</div>
+                                    {{-- <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div> --}}
                                 </div>
                                 <div class="text-carousel-content fl-wrap">
-                                    <p> "In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis
-                                        cursus. Nulla eu mi magna. Etiam suscipit commodo gravida. Lorem ipsum dolor sit
-                                        amet, conse ctetuer adipiscing elit, sed diam nonu mmy nibh euismod tincidunt ut
-                                        laoreet dolore luptatum."</p>
-                                    <a href="#" class="testim-link color-bg">Via Facebook</a>
+                                    <p> "I was amazed by how quickly John fixed my kitchen cabinets. He arrived on time, worked efficiently, and even cleaned up afterward. The pricing was transparent and fair - exactly what I needed."
+                                    </p>
+                                    {{-- <a href="#" class="testim-link color-bg">Via Facebook</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -686,16 +490,13 @@
                         <div class="slick-item">
                             <div class="text-carousel-item fl-wrap">
                                 <div class="text-carousel-item-header fl-wrap">
-                                    <div class="popup-avatar"><img src="images/avatar/2.jpg" alt=""></div>
-                                    <div class="review-owner fl-wrap">Austin Harisson</div>
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="4"> </div>
+                                    {{-- <div class="popup-avatar"><img src="images/avatar/2.jpg" alt=""></div> --}}
+                                    <div class="review-owner fl-wrap">Charles Igwe</div>
+                                    {{-- <div class="listing-rating card-popup-rainingvis" data-starrating2="4"> </div> --}}
                                 </div>
                                 <div class="text-carousel-content fl-wrap">
-                                    <p> "Feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-                                        blandit praesent luptatum zzril delenit augue duis dolore te odio dignissim qui
-                                        blandit praesent blandit praesent luptatum zzril.Vulputate urna. Nulla tristique
-                                        mi a massa convallis."</p>
-                                    <a href="#" class="testim-link color-bg">Via Twitter</a>
+                                    <p> "We've used this platform three times now for different projects, and each handyman has been exceptional. The latest work on our bathroom renovation exceeded our expectations. Professional service from start to finish!"</p>
+                                    {{-- <a href="#" class="testim-link color-bg">Via Twitter</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -704,16 +505,13 @@
                         <div class="slick-item">
                             <div class="text-carousel-item fl-wrap">
                                 <div class="text-carousel-item-header fl-wrap">
-                                    <div class="popup-avatar"><img src="images/avatar/3.jpg" alt=""></div>
-                                    <div class="review-owner fl-wrap">Garry Colonsi</div>
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="4"> </div>
+                                    {{-- <div class="popup-avatar"><img src="images/avatar/3.jpg" alt=""></div> --}}
+                                    <div class="review-owner fl-wrap">Olatunde Babatope</div>
+                                    {{-- <div class="listing-rating card-popup-rainingvis" data-starrating2="4"> </div> --}}
                                 </div>
                                 <div class="text-carousel-content fl-wrap">
-                                    <p> "In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis
-                                        cursus. Nulla eu mi magna. Etiam suscipit commodo gravida. Lorem ipsum dolor sit
-                                        amet, conse ctetuer adipiscing elit, sed diam nonu mmy nibh euismod tincidunt ut
-                                        laoreet dolore luptatum."</p>
-                                    <a href="#" class="testim-link color-bg">Via Facebook</a>
+                                    <p> "Finding reliable handymen used to be a nightmare until I discovered this platform. Dave came over to fix multiple issues around my house - from electrical work to door repairs. His expertise saved me from having to call multiple contractors."</p>
+                                    {{-- <a href="#" class="testim-link color-bg">Via Facebook</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -722,16 +520,13 @@
                         <div class="slick-item">
                             <div class="text-carousel-item fl-wrap">
                                 <div class="text-carousel-item-header fl-wrap">
-                                    <div class="popup-avatar"><img src="images/avatar/4.jpg" alt=""></div>
-                                    <div class="review-owner fl-wrap">Antony Moore</div>
-                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div>
+                                    {{-- <div class="popup-avatar"><img src="images/avatar/4.jpg" alt=""></div> --}}
+                                    <div class="review-owner fl-wrap">Daniel Musa</div>
+                                    {{-- <div class="listing-rating card-popup-rainingvis" data-starrating2="5"> </div> --}}
                                 </div>
                                 <div class="text-carousel-content fl-wrap">
-                                    <p> "Feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-                                        blandit praesent luptatum zzril delenit augue duis dolore te odio dignissim qui
-                                        blandit praesent blandit praesent luptatum zzril.Vulputate urna. Nulla tristique
-                                        mi a massa convallis."</p>
-                                    <a href="#" class="testim-link color-bg">Via Twitter</a>
+                                    <p> "As a busy professional, I appreciate how easy it was to look and find through the platform. The handyman they sent was knowledgeable and patient in explaining every step of the repair process. Five stars!"</p>
+                                    {{-- <a href="#" class="testim-link color-bg">Via Twitter</a> --}}
                                 </div>
                             </div>
                         </div>
@@ -743,7 +538,7 @@
         </div>
         <!-- content end -->
         <!-- subscribe-wrap -->
-        <div class="subscribe-wrap fl-wrap">
+        {{-- <div class="subscribe-wrap fl-wrap">
             <div class="container">
                 <div class="subscribe-container fl-wrap color-bg">
                     <div class="pwh_bg"></div>
@@ -774,10 +569,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- subscribe-wrap end -->
         <!-- footer -->
-        <footer class="main-footer fl-wrap">
+        {{-- <footer class="main-footer fl-wrap">
             <div class="footer-inner fl-wrap">
                 <div class="container">
                     <div class="row">
@@ -858,7 +653,7 @@
                     </div>
                 </div>
             </div>
-        </footer>
+        </footer> --}}
         <!-- footer end -->
     </div>
     <!-- wrapper end -->
@@ -962,7 +757,7 @@
     </div>
     <!--register form end -->
     <!--secondary-nav -->
-    <div class="secondary-nav">
+    {{-- <div class="secondary-nav">
         <ul>
             <li><a href="dashboard-add-listing.html" class="tolt" data-microtip-position="left"
                     data-tooltip="Sell Property"><i class="fal fa-truck-couch"></i> </a></li>
@@ -979,7 +774,7 @@
                 js-progress-bar" />
             </svg>
         </div>
-    </div>
+    </div> --}}
     <!--secondary-nav end -->
     <a class="to-top color-bg"><i class="fas fa-caret-up"></i></a>
     <!--map-modal -->

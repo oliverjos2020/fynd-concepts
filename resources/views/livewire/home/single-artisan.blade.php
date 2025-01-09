@@ -4,15 +4,31 @@
             <div class="container">
                 <div class="breadcrumbs-list">
                     <a href="/">Home</a><a href="/artisan/{{$artisanID}}">Artisan</a>
+                    @php
+                    $averageRating = App\Models\Review::where('artisan_id', $user->id)->avg('rating');
+                    $myrating = round($averageRating, 1);
+                    $rating = " ";
+                    if($myrating <= 1){
+                        $rating = 'Unrated';
+                    }elseif($myrating <= 2){
+                        $rating = 'Fair';
+                    }elseif($myrating <= 3){
+                        $rating = 'Average';
+                    }elseif($myrating <= 4){
+                        $rating = 'Good';
+                    }elseif($myrating > 4){
+                        $rating = 'Excellent';
+                    }
+                @endphp
                 </div>
-                <div class="show-more-snopt smact"><i class="fal fa-ellipsis-v"></i></div>
+                {{-- <div class="show-more-snopt smact"><i class="fal fa-ellipsis-v"></i></div>
                 <div class="show-more-snopt-tooltip">
                     <a href="#sec15" class="custom-scroll-link"> <i class="fas fa-comment-alt"></i> Write a review</a>
                     <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
-                </div>
-                <a class="print-btn tolt" href="javascript:window.print()" data-microtip-position="bottom"  data-tooltip="Print"><i class="fas fa-print"></i></a>
+                </div> --}}
+                {{-- <a class="print-btn tolt" href="javascript:window.print()" data-microtip-position="bottom"  data-tooltip="Print"><i class="fas fa-print"></i></a>
                 <a class="compare-top-btn tolt" data-microtip-position="bottom"  data-tooltip="Compare" href="#"><i class="fas fa-random"></i></a>
-                <div class="like-btn"><i class="fas fa-heart"></i> Save</div>
+                <div class="like-btn"><i class="fas fa-heart"></i> Save</div> --}}
             </div>
         </div>
         <div class="gray-bg small-padding fl-wrap">
@@ -56,6 +72,7 @@
                                     <div class="share-container  isShare"></div>
                                 </div>
                             </div>
+
                             <!--  list-single-opt_header end -->
                             <!--  list-single-header-item-->
                             <div class="list-single-header-item  fl-wrap" id="sec1">
@@ -64,7 +81,7 @@
                                         <h1>{{$user->business_name}} <span class="verified-badge tolt" data-microtip-position="bottom"  data-tooltip="Verified"><i class="fas fa-check"></i></span></h1>
                                         <div class="geodir-category-location fl-wrap">
                                             <a href="#"><i class="fas fa-map-marker-alt"></i>  {{$user->work_address}}</a>
-                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
+                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$myrating}}"><span class="re_stars-title">{{$rating}}</span></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -88,7 +105,7 @@
                                     </div> --}}
                                 </div>
                             </div>
-                            <div class="list-single-main-media fl-wrap">
+                            <div class="list-single-main-media fl-wrap" wire:ignore>
                                 <div class="single-slider-wrapper carousel-wrap fl-wrap">
                                     <div class="slider-for fl-wrap carousel lightgallery"  >
                                         <!--  slick-slide-item -->
@@ -154,58 +171,75 @@
                             </div> --}}
                             <div class="list-single-main-container fl-wrap">
                                 <!-- list-single-main-item -->
-                                <div class="list-single-main-item fl-wrap">
+                                {{-- <div class="list-single-main-item fl-wrap">
                                     <div class="list-single-main-item-title">
                                         <h3>About This Artisan</h3>
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
                                         <p>{{$user->bio}}</p>
-                                        {{-- <a href="#" class="btn float-btn color-bg">Visit Website</a> --}}
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- list-single-main-item end -->
 
                                 <!-- list-single-main-item -->
-                                <div class="list-single-main-item fw-lmi fl-wrap" id="sec5">
+                                {{-- <div class="list-single-main-item fw-lmi fl-wrap" id="sec5">
                                     <div class="map-container mapC_vis mapC_vis2">
                                         <div id="singleMap" data-latitude="40.7427837" data-longitude="-73.11445617675781" data-mapTitle="Our Location" data-infotitle="House in Financial Distric" data-infotext="70 Bright St New York, USA"></div>
                                         <div class="scrollContorl"></div>
                                     </div>
                                     <input id="pac-input" class="controls fl-wrap controls-mapwn" autocomplete="on" type="text" placeholder="What Nearby? Schools, Gym... " value="">
-                                </div>
+                                </div> --}}
                                 <!-- list-single-main-item end -->
                                 <!-- list-single-main-item -->
                                 <div class="list-single-main-item fl-wrap" id="sec6">
                                     <div class="list-single-main-item-title">
-                                        <h3>Reviews <span>2</span></h3>
+                                        <h3>Reviews <span>{{$myReview->count() ?? 0}}</span></h3>
+
                                     </div>
                                     <div class="list-single-main-item_content fl-wrap">
                                         <div class="reviews-comments-wrap fl-wrap">
                                             <div class="review-total">
-                                                <span class="review-number blue-bg">4.0</span>
-                                                <div class="listing-rating card-popup-rainingvis" data-starrating2="4"><span class="re_stars-title">Good</span></div>
+
+                                                <span class="review-number blue-bg">{{$myrating}}</span>
+                                                <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$myrating}}"><span class="re_stars-title">{{$rating}}</span></div>
                                             </div>
                                             <!-- reviews-comments-item -->
+                                            @forelse($myReview as $rev)
                                             <div class="reviews-comments-item">
                                                 <div class="review-comments-avatar">
                                                     <img src="{{url('assets/images/users/avatar-1.jpg')}}" alt="fynd concepts">
                                                 </div>
                                                 <div class="reviews-comments-item-text smpar">
-                                                    <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
-                                                    <div class="show-more-snopt-tooltip bxwt">
-                                                        <a href="#"> <i class="fas fa-reply"></i> Reply</a>
-                                                        <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
-                                                    </div>
-                                                    <h4><a href="#">Liza Rose</a></h4>
-                                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="3"><span class="re_stars-title">Average</span></div>
+
+                                                    <h4><a href="#">{{$rev->user->name}}</a></h4>
+                                                    @php
+                                                    $myrating = $rev->rating;
+                                                    $rating = " ";
+                                                        if($myrating <= 1){
+                                                            $rating = 'Very Bad';
+                                                        }elseif($myrating <= 2){
+                                                            $rating = 'Fair';
+                                                        }elseif($myrating <= 3){
+                                                            $rating = 'Average';
+                                                        }elseif($myrating <= 4){
+                                                            $rating = 'Good';
+                                                        }elseif($myrating >= 5){
+                                                            $rating = 'Excellent';
+                                                        }
+                                                    @endphp
+                                                    <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$rev->rating}}"><span style="min-width:120px; left:256px!important;" class="re_stars-title">{{$rating}}</span></div>
                                                     <div class="clearfix"></div>
-                                                    <p>" Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. "</p>
-                                                    <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>12 April 2018</span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  Helpful Review  <span>6</span> </a></div>
+                                                    <p>{{$rev->review}}</p>
+                                                    <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>{{$rev->created_at->diffForHumans()}}</span>
+                                                        {{-- <a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  Helpful Review  <span>6</span> </a> --}}
+                                                    </div>
                                                 </div>
                                             </div>
+                                            @empty
+                                            @endforelse
                                             <!--reviews-comments-item end-->
                                             <!-- reviews-comments-item -->
-                                            <div class="reviews-comments-item">
+                                            {{-- <div class="reviews-comments-item">
                                                 <div class="review-comments-avatar">
                                                     <img src="{{url('assets/images/users/avatar-2.jpg')}}" alt="fynd concepts">
                                                 </div>
@@ -221,7 +255,7 @@
                                                     <p>" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. "</p>
                                                     <div class="reviews-comments-item-date"><span class="reviews-comments-item-date-item"><i class="far fa-calendar-check"></i>03 December 2017</span><a href="#" class="rate-review"><i class="fal fa-thumbs-up"></i>  Helpful Review  <span>2</span> </a></div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <!--reviews-comments-item end-->
                                         </div>
                                     </div>
@@ -233,43 +267,58 @@
                                         <h3>Add Your Review</h3>
                                     </div>
                                     <!-- Add Review Box -->
-                                    <div id="add-review" class="add-review-box">
-                                        <div class="leave-rating-wrap">
-                                            <span class="leave-rating-title">Your rating  for this listing : </span>
-                                            <div class="leave-rating">
-                                                <input type="radio"    data-ratingtext="Excellent"   name="rating" id="rating-1" value="1"/>
-                                                <label for="rating-1" class="fal fa-star"></label>
-                                                <input type="radio" data-ratingtext="Good" name="rating" id="rating-2" value="2"/>
-                                                <label for="rating-2" class="fal fa-star"></label>
-                                                <input type="radio" name="rating"  data-ratingtext="Average" id="rating-3" value="3"/>
-                                                <label for="rating-3" class="fal fa-star"></label>
-                                                <input type="radio" data-ratingtext="Fair" name="rating" id="rating-4" value="4"/>
-                                                <label for="rating-4" class="fal fa-star"></label>
-                                                <input type="radio" data-ratingtext="Very Bad "   name="rating" id="rating-5" value="5"/>
-                                                <label for="rating-5"    class="fal fa-star"></label>
-                                            </div>
-                                            <div class="count-radio-wrapper">
-                                                <span id="count-checked-radio">Your Rating</span>
-                                            </div>
-                                        </div>
-                                        <!-- Review Comment -->
-                                        <form   class="add-comment custom-form">
-                                            <fieldset>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label>Your name* <span class="dec-icon"><i class="fas fa-user"></i></span></label>
-                                                        <input   name="phone" type="text"    onClick="this.select()" value="">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label>Yourmail* <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
-                                                        <input   name="reviewwname" type="text"    onClick="this.select()" value="">
-                                                    </div>
+                                    @if(auth()->check())
+                                        <div id="add-review" class="add-review-box">
+                                            <div class="leave-rating-wrap">
+                                                <span class="leave-rating-title">Your rating  for this listing : </span>
+                                                <div class="leave-rating">
+                                                    <input type="radio" data-ratingtext="Excellent" name="rating" id="rating-5" value="5" wire:model="myIrating"/>
+                                                    <label for="rating-5" class="fal fa-star"></label>
+                                                    <input type="radio" data-ratingtext="Good" name="rating" id="rating-4" value="4" wire:model="myIrating"/>
+                                                    <label for="rating-4" class="fal fa-star"></label>
+                                                    <input type="radio" name="rating"  data-ratingtext="Average" id="rating-3" value="3" wire:model="myIrating"/>
+                                                    <label for="rating-3" class="fal fa-star"></label>
+                                                    <input type="radio" data-ratingtext="Fair" name="rating" id="rating-2" value="2" wire:model="myIrating"/>
+                                                    <label for="rating-2" class="fal fa-star"></label>
+                                                    <input type="radio" data-ratingtext="Very Bad" name="rating" id="rating-1" value="1" wire:model="myIrating"/>
+                                                    <label for="rating-1" class="fal fa-star"></label>
                                                 </div>
-                                                <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
-                                            </fieldset>
-                                            <button class="btn big-btn color-bg float-btn">Submit Review <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                                        </form>
-                                    </div>
+                                                <div>
+                                                    @php
+                                                        $irating = "";
+                                                        if($myIrating == '1'){
+                                                            $irating = 'Very Bad';
+                                                        }elseif($myIrating == '2'){
+                                                            $irating = 'Fair';
+                                                        }elseif($myIrating == '3'){
+                                                            $irating = 'Average';
+                                                        }elseif($myIrating == '4'){
+                                                            $irating = 'Good';
+                                                        }elseif($myIrating == '5'){
+                                                            $irating = 'Excellent';
+                                                        }
+                                                    @endphp
+                                                    Your Rating: {{ $irating ? $irating : 'None' }}
+                                                </div>
+
+                                            </div>
+                                            <!-- Review Comment -->
+                                            <form class="add-comment custom-form">
+                                                @error('rating')
+                                                    <label class="text-danger"> {{ $message }} </label>
+                                                @enderror
+                                                <fieldset>
+                                                    <textarea cols="40" rows="3" wire:model="review" placeholder="Your Review:"></textarea>
+                                                </fieldset>
+                                                @error('review')
+                                                    <label class="text-danger"> {{ $message }} </label>
+                                                @enderror
+                                                <a wire:click="store" style="cursor:pointer" class="btn big-btn color-bg float-btn">Submit Review <i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <p>You must be logged in to submit a review</p>
+                                    @endif
                                     <!-- Add Review Box / End -->
                                 </div>
                                 <!-- list-single-main-item end -->
@@ -284,11 +333,11 @@
                             <div class="profile-widget">
                                 <div class="profile-widget-header color-bg smpar fl-wrap">
                                     <div class="pwh_bg"></div>
-                                    <div class="call-btn"><a href="tel:123-456-7890" class="tolt color-bg" data-microtip-position="right"  data-tooltip="Call Now"><i class="fas fa-phone-alt"></i></a></div>
+                                    <div class="call-btn"><a href="tel:{{$user->phone_no}}" class="tolt color-bg" data-microtip-position="right"  data-tooltip="Call Now"><i class="fas fa-phone-alt"></i></a></div>
                                     <div class="box-widget-menu-btn smact"><i class="far fa-ellipsis-h"></i></div>
                                     <div class="show-more-snopt-tooltip bxwt">
-                                        <a href="#"> <i class="fas fa-comment-alt"></i> Write a review</a>
-                                        <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a>
+                                        <a href="#sec15"> <i class="fas fa-comment-alt"></i> Write a review</a>
+                                        {{-- <a href="#"> <i class="fas fa-exclamation-triangle"></i> Report </a> --}}
                                     </div>
                                     <div class="profile-widget-card">
                                         <div class="profile-widget-image">
@@ -299,7 +348,12 @@
                                             <div class="clearfix"></div>
                                             {{-- <div class="pwh_counter"><span>22</span>Property Listings</div> --}}
                                             <div class="clearfix"></div>
-                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
+                                                    @php
+                                                        $averageRating = App\Models\Review::where('artisan_id', $user->id)->avg('rating');
+                                                        $myrating = round($averageRating, 1);
+
+                                                    @endphp
+                                            <div class="listing-rating card-popup-rainingvis" data-starrating2="{{$myrating}}"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -312,10 +366,10 @@
                                             <li><span><i class="fal fa-envelope"></i> LGA :</span> <a href="#">{{$user->lga->name}}</a></li>
                                         </ul>
                                     </div>
-                                    <div class="profile-widget-footer fl-wrap">
+                                    {{-- <div class="profile-widget-footer fl-wrap">
                                         <a href="/artisan/{{$artisanID}}" class="btn float-btn color-bg small-btn">View Profile</a>
                                         <a href="#sec-contact" class="custom-scroll-link tolt" data-microtip-position="left"  data-tooltip="Viewing Property"><i class="fal fa-paper-plane"></i></a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -323,24 +377,40 @@
                         <!--box-widget-->
                         <div class="box-widget fl-wrap">
                             <div class="box-widget fl-wrap" id="sec-contact">
-                                <div class="box-widget-title fl-wrap box-widget-title-color color-bg">Post a Review</div>
+                                <div class="box-widget-title fl-wrap box-widget-title-color color-bg">About This Artisan</div>
                                 <div class="box-widget-content fl-wrap">
                                     <div class="custom-form">
-                                        <form method="post"  name="contact-property-form">
-                                            <label>Your name* <span class="dec-icon"><i class="fas fa-user"></i></span></label>
-                                            <input name="phone" type="text" onClick="this.select()" value="">
-                                            <label>Your email  * <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
-                                            <input name="email" type="text" onClick="this.select()" value="">
-                                            <label>Your review  * <span class="dec-icon"><i class="fas fa-envelope"></i></span></label>
-                                            <textarea cols="40" rows="3" placeholder="Your Review:"></textarea>
-
-                                            <button type="submit" class="btn float-btn color-bg fw-btn"> Send</button>
-                                        </form>
+                                            <p style="text-align: justify">{{$user->bio}}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--box-widget end -->
+
+                        <!--box-widget-->
+                        <div class="box-widget fl-wrap">
+                            <div class="box-widget fl-wrap" id="sec-contact">
+                                <div class="box-widget-title fl-wrap box-widget-title-color color-bg">Report This Artisan</div>
+
+                                <div class="box-widget-content fl-wrap">
+                                    @if(auth()->check())
+                                    <div class="custom-form">
+                                        <fieldset>
+                                            <textarea cols="40" rows="3" wire:model="message" placeholder="Your Message:"></textarea>
+                                        </fieldset>
+                                        @error('message')
+                                            <label class="text-danger"> {{ $message }} </label>
+                                        @enderror
+                                        <a wire:click="report" style="cursor:pointer" class="btn big-btn color-bg float-btn">Submit <i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
+
+                                    </div>
+                                    @else
+                                        <p>You must be logged in to submit a report</p>
+                                    @endif
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                     <!--  sidebar end-->
                 </div>
@@ -349,183 +419,73 @@
                     <div class="list-single-main-item-title">
                         <h3>Similar Properties</h3>
                     </div>
-                    <div class="listing-carousel carousel ">
+                    <div class="listing-carousel carousel" wire:ignore>
                         <!-- slick-slide-item -->
+                        @forelse($similarArtisans as $similarArtisan)
                         <div class="slick-slide-item">
                             <!-- listing-item -->
                             <div class="listing-item">
                                 <article class="geodir-category-listing fl-wrap">
                                     <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/3.jpg" alt="">
+                                        <a href="/artisan/{{ $similarArtisan->id }}" class="geodir-category-img_item">
+                                            <img src="{{ url($similarArtisan->photos->first()->url ?? 'logo/auto-logo.png') }}" alt="{{$similarArtisan->slug}}">
                                             <div class="overlay"></div>
                                         </a>
                                         <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i>  70 Bright St New York, USA</a>
+                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i>  {{ Str::limit($similarArtisan->work_address, 35, '...') }}</a>
                                         </div>
                                         <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
+                                            <li><a href="#" class="cat-opt blue-bg">{{ $similarArtisan->service->service ?? '' }}</a></li>
+                                            {{-- <li><a href="#" class="cat-opt color-bg">Apartment</a></li> --}}
                                         </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
+                                        {{-- <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
+                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a> --}}
                                         <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 8</span>
+                                            <span><i class="fas fa-camera"></i> {{ $similarArtisan->photos->count() }}</span>
                                         </div>
                                     </div>
                                     <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Gorgeous house for sale</a></h3>
-                                        <div class="geodir-category-content_price">$ 600,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
+                                        <h3><a href="/artisan/{{ $user->id }}">{{ $similarArtisan->business_name }}</a></h3>
+                                        {{-- <div class="geodir-category-content_price">$ 600,000</div> --}}
+                                        <p>{{ Str::limit($similarArtisan->bio, 135, '...') }}</p>
+                                        {{-- <div class="geodir-category-content-details">
                                             <ul>
                                                 <li><i class="fal fa-bed"></i><span>3</span></li>
                                                 <li><i class="fal fa-bath"></i><span>2</span></li>
                                                 <li><i class="fal fa-cube"></i><span>450 ft2</span></li>
                                             </ul>
-                                        </div>
+                                        </div> --}}
+                                        @php
+                                        $averageRating = App\Models\Review::where(
+                                            'artisan_id',
+                                            $similarArtisan->id,
+                                        )->avg('rating');
+                                        $myrating = round($averageRating, 1);
+                                        $rating = ' ';
+                                        if ($myrating <= 1) {
+                                            $rating = 'Unrated';
+                                        } elseif ($myrating <= 2) {
+                                            $rating = 'Fair';
+                                        } elseif ($myrating <= 3) {
+                                            $rating = 'Average';
+                                        } elseif ($myrating <= 4) {
+                                            $rating = 'Good';
+                                        } elseif ($myrating >= 5) {
+                                            $rating = 'Excellent';
+                                        }
+                                    @endphp
                                         <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/2.jpg" alt=""><span>By Liza Rose</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Good" data-starrating2="4"></div>
+                                            <a href="/artisan/{{ $user->id }}" class="gcf-company"><img src="{{ url($similarArtisan->passport ?? 'logo/logo-blue.png') }}" alt=""><span>By {{ $user->name }}</span></a>
+                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="{{ $rating }}" data-starrating2="{{ $myrating }}"></div>
                                         </div>
                                     </div>
                                 </article>
                             </div>
                             <!-- listing-item end-->
                         </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/1.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i>   40 Journal Square  , NJ, USA</a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 47</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Luxury Family Home</a></h3>
-                                        <div class="geodir-category-content_price">$ 300,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>4</span></li>
-                                                <li><i class="fal fa-bath"></i><span>2</span></li>
-                                                <li><i class="fal fa-cube"></i><span>460 ft2</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/1.jpg" alt=""><span>By Anna Lips</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Excellent" data-starrating2="5"></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!-- listing-item end-->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/9.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i> 34-42 Montgomery St , NY, USA</a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 4</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Gorgeous house for sale</a></h3>
-                                        <div class="geodir-category-content_price">$ 120,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>2</span></li>
-                                                <li><i class="fal fa-bath"></i><span>1</span></li>
-                                                <li><i class="fal fa-cube"></i><span>220 ft2</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/3.jpg" alt=""><span>By Mark Frosty</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Good" data-starrating2="4"></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!-- listing-item end-->
-                        </div>
-                        <!-- slick-slide-item end-->
-                        <!-- slick-slide-item -->
-                        <div class="slick-slide-item">
-                            <!-- listing-item -->
-                            <div class="listing-item">
-                                <article class="geodir-category-listing fl-wrap">
-                                    <div class="geodir-category-img fl-wrap">
-                                        <a href="listing-single.html" class="geodir-category-img_item">
-                                            <img src="images/all/6.jpg" alt="">
-                                            <div class="overlay"></div>
-                                        </a>
-                                        <div class="geodir-category-location">
-                                            <a href="#4" class="map-item"><i class="fas fa-map-marker-alt"></i>  W 85th St, New York, USA </a>
-                                        </div>
-                                        <ul class="list-single-opt_header_cat">
-                                            <li><a href="#" class="cat-opt blue-bg">Sale</a></li>
-                                            <li><a href="#" class="cat-opt color-bg">Apartment</a></li>
-                                        </ul>
-                                        <a href="#" class="geodir_save-btn tolt" data-microtip-position="left" data-tooltip="Save"><span><i class="fal fa-heart"></i></span></a>
-                                        <a href="#" class="compare-btn tolt" data-microtip-position="left" data-tooltip="Compare"><span><i class="fal fa-random"></i></span></a>
-                                        <div class="geodir-category-listing_media-list">
-                                            <span><i class="fas fa-camera"></i> 13</span>
-                                        </div>
-                                    </div>
-                                    <div class="geodir-category-content fl-wrap">
-                                        <h3><a href="listing-single.html">Contemporary Apartment</a></h3>
-                                        <div class="geodir-category-content_price">$ 1,600,000</div>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla.</p>
-                                        <div class="geodir-category-content-details">
-                                            <ul>
-                                                <li><i class="fal fa-bed"></i><span>4</span></li>
-                                                <li><i class="fal fa-bath"></i><span>1</span></li>
-                                                <li><i class="fal fa-cube"></i><span>550 ft2</span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="geodir-category-footer fl-wrap">
-                                            <a href="agent-single.html" class="gcf-company"><img src="images/avatar/4.jpg" alt=""><span>By Bill Trust</span></a>
-                                            <div class="listing-rating card-popup-rainingvis tolt" data-microtip-position="top" data-tooltip="Excellent
-                                                " data-starrating2="5"></div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                            <!-- listing-item end-->
-                        </div>
+                        @empty
+                        @endforelse
+
                         <!-- slick-slide-item end-->
                     </div>
                     <div class="swiper-button-prev lc-wbtn lc-wbtn_prev"><i class="far fa-angle-left"></i></div>
