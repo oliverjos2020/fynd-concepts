@@ -70,7 +70,7 @@ class UserAPIController extends Controller
             ], 201);
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422, // Adding the response code
             ], 422);
         }
@@ -113,7 +113,7 @@ class UserAPIController extends Controller
             ], 201);
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422, // Adding the response code
             ], 422);
         }
@@ -161,7 +161,7 @@ class UserAPIController extends Controller
             return response()->json(['responseCode' => 200, 'responseMessage' => 'success', 'token' => $token, 'user' => $user]);
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422, // Adding the response code
             ], 422);
         }
@@ -189,7 +189,7 @@ class UserAPIController extends Controller
             return response()->json(['responseMessage' => 'Invalid Email or OTP.', 'responseCode' => 400], 400);
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422, // Adding the response code
             ], 422);
         }
@@ -245,7 +245,7 @@ class UserAPIController extends Controller
             ], 500);
         } catch (Exception $e) {
             return response()->json([
-                'responseMessage' => $e->getMessage(),
+                'responseMessage' => $e->getMessage() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 500
             ], 500);
         }
@@ -308,7 +308,7 @@ class UserAPIController extends Controller
             ], 200);
         } catch (Exception $e) {
             return response()->json([
-                'responseMessage' => $e->getMessage(),
+                'responseMessage' => $e->getMessage() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422,
             ], 422);
         }
@@ -329,7 +329,7 @@ class UserAPIController extends Controller
 
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422,
             ], 422);
         }

@@ -37,7 +37,7 @@ class FavoriteAPIController extends Controller
 
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422,
             ], 422);
         }
@@ -57,7 +57,7 @@ class FavoriteAPIController extends Controller
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422,
             ], 422);
         }
@@ -93,7 +93,7 @@ class FavoriteAPIController extends Controller
             ], 200);
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422,
             ], 422);
         }
