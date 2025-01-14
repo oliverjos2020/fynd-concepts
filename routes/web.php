@@ -143,6 +143,9 @@ Route::middleware('api')->group(function () {
         Route::post('/api/v1/my-favorite', [FavoriteAPIController::class, 'myFavorites']);
         Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
         Route::post('/api/v1/report', [ReportArtisanController::class, 'create']);
+        Route::post('/api/v1/deleteAccount', [UserAPIController::class, 'deleteAccount']);
+        Route::get('/api/v1/states', [ArtisanController::class, 'allState']);
+        Route::post('/api/v1/lgas', [ArtisanController::class, 'AllLGA']);
     });
 });
 

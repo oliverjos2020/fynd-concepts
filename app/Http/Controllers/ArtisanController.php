@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\User;
 use App\Models\LGA;
+use App\Models\State;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+
 
 class ArtisanController extends Controller
 {
@@ -45,9 +48,14 @@ class ArtisanController extends Controller
             if ($request->has('state_id')) {
                 $query->where('state_id', $request->input('state_id'));
             }
+            if ($request->has('search')) {
+                $query->where('business_name', $request->input('search'));
+            }
 
             // Get the results with the limit
-            $data = $query->limit($limit)->get();
+            // $data = $query->limit($limit)->get();
+            $data = $query->orderBy('created_at', 'desc')->limit($limit)->get();
+
 
             // Calculate average rating for each artisan
             $data->each(function ($artisan) {
@@ -113,7 +121,12 @@ class ArtisanController extends Controller
     }
     public function updateProfile(Request $request)
     {
-        // try{
+          Log::info('Incoming update profile request', [
+            'data' => $request->all(),
+            'ip' => $request->ip(),
+            'user_agent' => $request->header('User-Agent')
+        ]);
+        try{
             // Validation with user-friendly messages
             $request->validate([
                 'email' => ['required', 'email'],
@@ -153,14 +166,17 @@ class ArtisanController extends Controller
             if (!$userUpdated) {
                 return response()->json(['responseMessage' => 'User with email not found', 'responseCode' => 404], 404);
             }
+            $data = User::where('email', $request->email)->first();
 
             return response()->json([
                 'responseCode' => 200,
                 'responseMessage' => 'Profile updated successfully',
+                'data' => $data
             ], 200);
-        // }catch(Exception $e) {
-        //     return response()->json(['responseMessage' => $e->getMessage(), 'responseCode' => 500], 500);
-        // }
+        }catch(ValidationException $e) {
+            
+            return response()->json(['responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed', 'responseCode' => 500], 500);
+        }
     }
 
 }
