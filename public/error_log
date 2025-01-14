@@ -1,0 +1,3 @@
+[14-Jan-2025 15:27:28 UTC] PHP Fatal error:  Cannot use App\Models\User as User because the name is already in use in /home/fynddxeu/app.fyndconcepts.org/app/Http/Controllers/ArtisanController.php on line 8
+[14-Jan-2025 15:27:35 UTC] PHP Fatal error:  Cannot use App\Models\User as User because the name is already in use in /home/fynddxeu/app.fyndconcepts.org/app/Http/Controllers/ArtisanController.php on line 8
+[14-Jan-2025 15:27:35 UTC] PHP Fatal error:  Cannot use App\Models\User as User because the name is already in use in /home/fynddxeu/app.fyndconcepts.org/app/Http/Controllers/ArtisanController.php on line 8

@@ -126,7 +126,7 @@ class UserAPIController extends Controller
             $request->validate([
                 'email' => ['required', 'email'],
                 'password' => ['required'],
-                'device_token' => ['required']
+                'device_token' => ['sometimes']
             ]);
 
             if ($request->method() !== 'POST') {
@@ -154,10 +154,12 @@ class UserAPIController extends Controller
                 return response()->json(['responseMessage' => 'Invalid credentials', 'responseCode' => 401], 401);
             }
 
-            DeviceToken::updateOrCreate(
-                ['device_token' => $request->device_token], // Match on device token
-                ['user_id' => $user->id]           // Update the user ID
-            );
+            if(!empty($request->device_token)){
+                DeviceToken::updateOrCreate(
+                    ['device_token' => $request->device_token], // Match on device token
+                    ['user_id' => $user->id]           // Update the user ID
+                );
+            }
             return response()->json(['responseCode' => 200, 'responseMessage' => 'success', 'token' => $token, 'user' => $user]);
         } catch (ValidationException $e) {
             return response()->json([
@@ -333,5 +335,19 @@ class UserAPIController extends Controller
                 'responseCode' => 422,
             ], 422);
         }
+    }
+    
+    public function deleteAccount(Request $request)
+    {
+        try{
+             $request->validate([
+                'email' => ['required', 'email']
+            ]);
+             User::where('email', $request->email)->delete();
+            return response()->json(['responseCode' => 200, 'responseMessage' => 'Account Deleted Successfully']);
+        }catch(Exception $e){
+           return response()->json(['responseCode' => 500, 'responseMessage' => $e->getMessage()]); 
+        }
+       
     }
 }
