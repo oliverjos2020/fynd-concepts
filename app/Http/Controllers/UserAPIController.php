@@ -314,6 +314,43 @@ class UserAPIController extends Controller
         }
     }
 
+    public function changePassword(Request $request)
+    {
+        try{
+        // Validate the request
+        $request->validate([
+            'email' => ['required', 'email', 'exists:users,email'],
+            'old_password' => ['required'],
+            'new_password' => ['required', 'string', 'min:8', 'confirmed'], // 'new_password_confirmation' should match
+        ]);
+
+        // Find the user by email
+        $user = User::where('email', $request->email)->first();
+
+        // Verify the old password
+        if (!Hash::check($request->old_password, $user->password)) {
+            throw ValidationException::withMessages([
+                'old_password' => ['The old password is incorrect.'],
+            ]);
+        }
+
+        // Update the user's password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'responseMessage' => 'Password changed successfully.',
+            'responseCode' => 200,
+        ], 200);
+
+    } catch (ValidationException $e) {
+        return response()->json([
+            'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
+            'responseCode' => 422, // Adding the response code
+        ], 422);
+    }
+
+    }
     public function forgotPassword(Request $request)
     {
         try{

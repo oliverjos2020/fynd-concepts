@@ -131,6 +131,7 @@ Route::middleware('api')->group(function () {
     Route::post('/api/v1/confirmOTP', [UserAPIController::class, 'confirmOtp']);
     Route::group(['middleware' => ['auth.jwt']], function() {
         Route::get('/api/v1/services', [ServiceController::class, 'services']);
+        Route::post('/api/v1/change-password', [UserAPIController::class, 'changePassword']);
         Route::get('/api/v1/artisans', [ArtisanController::class, 'artisans']);
         Route::post('/api/v1/updateProfile', [ArtisanController::class, 'updateProfile']);
         Route::post('/api/v1/getUser', [UserAPIController::class, 'getUser']);
