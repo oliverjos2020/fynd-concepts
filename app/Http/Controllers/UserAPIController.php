@@ -147,6 +147,9 @@ class UserAPIController extends Controller
             }
 
             if (is_null($user->email_verified_at)) {
+                $otp = $this->generateOTP();
+                User::where('email', $request->email)->update(['otp' => $otp]);
+                Mail::to($request->email)->send(new SendOtpMail($otp, $user->name));
                 return response()->json(['responseMessage' => 'Account not verified. Please verify your account with the OTP sent to your email.', 'responseCode' => 403], 403);
             }
 
@@ -202,17 +205,26 @@ class UserAPIController extends Controller
         return mt_rand(100000, 999999); // Generates a 6-digit OTP
     }
 
-    public function updateUser(Request $request)
+    public function sendOTP(Request $request)
     {
         try {
             $request->validate([
-                'email' => 'required|email',
-                'phone_no' => 'required',
-                'gender' => 'required',
+                'email' => 'required|email'
             ]);
+            
+            $otp = $this->generateOTP();
+            $user = User::where('email', $request->email)->first();
+            if($user){
+                User::where('email', $request->email)->update(['otp' => $otp]);
+                Mail::to($request->email)->send(new SendOtpMail($otp, $user->name));
+                return response()->json(['responseMessage' => 'OTP sent successfully', 'responseCode' => 200], 200);
+            }
+            
+            return response()->json(['responseMessage' => 'Invalid Email', 'responseCode' => 400], 400);
+            
         } catch (ValidationException $e) {
             return response()->json([
-                'responseMessage' => $e->errors(),
+                'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422, // Adding the response code
             ], 422);
         }

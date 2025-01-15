@@ -103,51 +103,53 @@ class PushNotification extends Component
             'topic' => ['required'],
             'body' => ['required'],
         ]);
-
-        $this->processing = true;  // Start processing
-
+        
+        $this->processing = true;
+        
         try {
             // Save the notification to the database
-            SendPushNotification::create(['title' => $this->title, 'topic' => $this->topic, 'body' => $this->body]);
-
-            // Simulate a delay (you can remove this in production)
-            // sleep(2);
-
-            // Define the topic to which you want to send notifications
-            // $topic = 'your-topic-name'; // Replace with your actual topic name
-
-            // Firebase Admin SDK
-            $factory = (new Factory)->withServiceAccount(storage_path('app/firebase/fynd-concept-firebase-adminsdk-ha7h4-d531f4f33a.json'));
+            SendPushNotification::create([
+                'title' => $this->title, 
+                'topic' => $this->topic, 
+                'body' => $this->body
+            ]);
+    
+            // Verify service account file
+            $serviceAccountPath = storage_path('app/firebase/fynd-concept-firebase-adminsdk-ha7h4-017e765799.json');
+            if (!file_exists($serviceAccountPath)) {
+                throw new Exception("Firebase service account file not found");
+            }
+    
+            // Initialize Firebase with verified service account
+            $factory = (new Factory)->withServiceAccount($serviceAccountPath);
             $messaging = $factory->createMessaging();
-
-            // Create the message for the topic
+            // dd($this->topic);
+    
+            // Create the message with your original structure
             $message = CloudMessage::withTarget('topic', $this->topic)
                 ->withNotification([
                     'title' => $this->title,
                     'body' => $this->body,
                 ]);
-
-            // Send the message to the topic
+    
+            // Send the message
             $messaging->send($message);
-
+    
             $this->dispatchBrowserEvent('notify', [
                 'type' => 'success',
                 'message' => 'Push Notification Sent Successfully to Topic.',
             ]);
-
+    
         } catch (Exception $e) {
             \Log::error('Push Notification Error: ' . $e->getMessage());
-
             $this->dispatchBrowserEvent('notify', [
                 'type' => 'error',
                 'message' => 'Failed to send notification: ' . $e->getMessage(),
             ]);
         } finally {
-            $this->processing = false;  // Stop processing after the task is complete
+            $this->processing = false;
         }
     }
-
-
     public function render()
     {
         $notifications = SendPushNotification::query()->latest()->paginate($this->limit);

@@ -34,6 +34,7 @@ use App\Http\Livewire\SubServiceManagement;
 use App\Http\Controllers\FavoriteAPIController;
 use App\Http\Controllers\FileUploadAPIController;
 use App\Http\Controllers\ReportArtisanController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,6 +130,9 @@ Route::middleware('api')->group(function () {
 
     Route::post('/api/v1/login', [UserAPIController::class, 'login']);
     Route::post('/api/v1/confirmOTP', [UserAPIController::class, 'confirmOtp']);
+    Route::get('/api/v1/states', [ArtisanController::class, 'allState']);
+    Route::get('/api/v1/notifications', [NotificationController::class, 'getNotifications']);
+    Route::post('/api/v1/sendOTP', [UserAPIController::class, 'sendOTP']);
     Route::group(['middleware' => ['auth.jwt']], function() {
         Route::get('/api/v1/services', [ServiceController::class, 'services']);
         Route::post('/api/v1/change-password', [UserAPIController::class, 'changePassword']);
@@ -144,7 +148,7 @@ Route::middleware('api')->group(function () {
         Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
         Route::post('/api/v1/report', [ReportArtisanController::class, 'create']);
         Route::post('/api/v1/deleteAccount', [UserAPIController::class, 'deleteAccount']);
-        Route::get('/api/v1/states', [ArtisanController::class, 'allState']);
+        
         Route::post('/api/v1/lgas', [ArtisanController::class, 'AllLGA']);
     });
 });
