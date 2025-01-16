@@ -109,8 +109,28 @@
                                                         <label class="text-danger"> {{ $message }} </label>
                                                     @enderror
                                                     <div class="clearfix"></div>
-                                                    <button type="submit" wire:click.prevent="register"
-                                                        class="log_btn color-bg"> Register </button>
+                                                    {{-- <div class="lost_password">
+                                                        <a href="/forgot-password">Lost Your Password?</a>
+                                                    </div>
+                                                    <div class="filter-tags">
+                                                        <input id="check-a3" type="checkbox" wire:model="remember">
+                                                        <label for="check-a3">Remember me</label>
+                                                    </div>
+                                                    <br><br> --}}
+                                                    <div class="row">
+                                                        <div class="filter-tags">
+                                                            <input id="check-a3" type="checkbox" wire:model="terms">
+                                                            <label for="check-a3"><a href="/terms-condition" target="_blank">Terms and condition</a></label>
+                                                            @error('terms')
+                                                            <label class="text-danger"> {{ $message }} </label>
+                                                            @enderror
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <button type="submit" wire:click.prevent="register" class="log_btn color-bg"> Register </button>
+                                                    </div>
+
                                                 </form>
                                             </div>
                                         </div>

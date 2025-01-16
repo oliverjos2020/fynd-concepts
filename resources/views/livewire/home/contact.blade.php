@@ -32,7 +32,7 @@
         <div class="row mt-4" style="padding:0px;">
             <div class="col-md-6" style="padding:35px">
                 <div class="box-widget fl-wrap fixed-column_menu-init" style="margin-top: 35px;">
-                    <div class="box-widget-content fl-wrap " >
+                    <div class="box-widget-content fl-wrap">
                         <div class="box-widget-title fl-wrap"><h2>We Are Ready to Help</h2></div>
                         <div class="faq-nav scroll-init fl-wrap">
                             <p style="font-size:16px">Your feedback is invaluable to us as we continuously strive to improve our services. If you have any suggestions, comments, or complaints, please don’t hesitate to share them with us. We are committed to addressing your inquiries promptly and professionally.</p>

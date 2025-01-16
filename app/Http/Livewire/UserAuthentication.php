@@ -27,6 +27,7 @@ class UserAuthentication extends Component
     public $loginEmail;
     public $loginPassword;
     public $remember = false;
+    public $terms;
 
     public function register()
     {
@@ -36,6 +37,7 @@ class UserAuthentication extends Component
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phone_no' => ['required', 'max:15', 'unique:users'],
                 'role' => ['required'],
+                'terms' => ['required'],
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
 
@@ -77,7 +79,7 @@ class UserAuthentication extends Component
 
             if (Auth::attempt(['email' => $this->loginEmail, 'password' => $this->loginPassword], $this->remember)) {
                 $user = User::where('email', $this->loginEmail)->first();
-                
+
                 if ($user->role_id == 1) {
                     return redirect(RouteServiceProvider::HOME); // Redirect to dashboard for admin
                 } elseif ($user->role_id == 2) {

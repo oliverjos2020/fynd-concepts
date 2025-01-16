@@ -18,6 +18,7 @@ use App\Http\Livewire\LGAManagement;
 use App\Http\Livewire\SingleArtisan;
 use App\Http\Livewire\RegisterClient;
 use App\Http\Livewire\RoleManagement;
+use App\Http\Livewire\TermsCondition;
 use App\Http\Livewire\UserManagement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\StateManagement;
@@ -32,9 +33,9 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserAPIController;
 use App\Http\Livewire\SubServiceManagement;
 use App\Http\Controllers\FavoriteAPIController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\FileUploadAPIController;
 use App\Http\Controllers\ReportArtisanController;
-use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,7 @@ Route::get('/', Index::class)->name('index');
 Route::get('/about', About::class)->name('about');
 Route::get('/faq', FAQ::class)->name('faq');
 Route::get('/contact', MyContact::class)->name('contact');
+Route::get('/terms-condition', TermsCondition::class)->name('termsCondition');
 // Route::get('/about', function(){
 //     return view('livewire.home.about')->layout('components.home.home-master');
 // });
@@ -148,7 +150,7 @@ Route::middleware('api')->group(function () {
         Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
         Route::post('/api/v1/report', [ReportArtisanController::class, 'create']);
         Route::post('/api/v1/deleteAccount', [UserAPIController::class, 'deleteAccount']);
-        
+
         Route::post('/api/v1/lgas', [ArtisanController::class, 'AllLGA']);
     });
 });
