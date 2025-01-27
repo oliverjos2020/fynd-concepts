@@ -25,6 +25,7 @@ use App\Http\Livewire\StateManagement;
 use App\Http\Livewire\TopicManagement;
 use App\Http\Livewire\PushNotification;
 use App\Http\Livewire\ReportManagement;
+use App\Http\Livewire\ManagePaymentPlan;
 use App\Http\Livewire\ServiceManagement;
 use App\Http\Livewire\UserAuthentication;
 use App\Http\Controllers\ReviewController;
@@ -113,6 +114,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/favorite', MyFavorite::class)->name('favorite');
     Route::get('/send-push-notification', PushNotification::class)->name('pushNotification');
     Route::get('/topic', TopicManagement::class)->name('topicManagement');
+    Route::get('/payment-plan', ManagePaymentPlan::class)->name('topicManagement');
     Route::middleware('can:admin-only')->group(function () {
         Route::get('/users', UserManagement::class)->name('userSetup');
         Route::get('/profile/{userID}', Profile::class)->name('userProfile');
@@ -135,6 +137,7 @@ Route::middleware('api')->group(function () {
     Route::get('/api/v1/states', [ArtisanController::class, 'allState']);
     Route::get('/api/v1/notifications', [NotificationController::class, 'getNotifications']);
     Route::post('/api/v1/sendOTP', [UserAPIController::class, 'sendOTP']);
+    Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
     Route::group(['middleware' => ['auth.jwt']], function() {
         Route::get('/api/v1/services', [ServiceController::class, 'services']);
         Route::post('/api/v1/change-password', [UserAPIController::class, 'changePassword']);
@@ -147,7 +150,6 @@ Route::middleware('api')->group(function () {
         Route::post('/api/v1/add-favorite', [FavoriteAPIController::class, 'create']);
         Route::post('/api/v1/remove-favorite', [FavoriteAPIController::class, 'remove']);
         Route::post('/api/v1/my-favorite', [FavoriteAPIController::class, 'myFavorites']);
-        Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
         Route::post('/api/v1/report', [ReportArtisanController::class, 'create']);
         Route::post('/api/v1/deleteAccount', [UserAPIController::class, 'deleteAccount']);
 

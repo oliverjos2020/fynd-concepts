@@ -20,6 +20,7 @@ class RoleManagement extends Component
     public $limit = '10';
 
     protected $queryString = ['limit', 'search'];
+    
 
      public function updatingSearch()
     {

@@ -243,15 +243,22 @@
                                     <span>Reports</span>
                                 </a>
                             </li>
-                            <li class="mm-active">
-                                <a href="javascript: void(0);" class="has-arrow waves-effect" aria-expanded="true">
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effecxt">
                                     <i class="mdi mdi-tag-outline"></i>
                                     <span>Push Notification</span>
                                 </a>
-                                <ul class="sub-menu mm-collapse mm-show" aria-expanded="false" style="">
+                                <ul class="sub-menu" aria-expanded="false">
                                     <li><a href="/topic">Notification Topics</a></li>
                                     <li><a href="/send-push-notification">Push Notification</a></li>
                                 </ul>
+                            </li>
+                            <li>
+                                <a href="/payment-plan" class="waves-effect">
+                                    <i class="mdi mdi-account-multiple-plus-outline"></i>
+                                    <span>Payment Plan</span>
+                                </a>
                             </li>
 
 
@@ -352,13 +359,12 @@
 
 
    <script>
-    document.addEventListener('livewire:load', function () {
-        window.addEventListener('notify', event => {
-            toastr[event.detail.type](event.detail.message);
+        document.addEventListener('livewire:load', function () {
+            window.addEventListener('notify', event => {
+                toastr[event.detail.type](event.detail.message);
+            });
         });
-    });
-
-</script>
+    </script>
 {{-- @livewire('paypal-payment') --}}
 @livewireScripts
 </body>
