@@ -49,8 +49,9 @@ class ArtisanController extends Controller
                 $query->where('state_id', $request->input('state_id'));
             }
             if ($request->has('search')) {
-                $query->where('business_name', $request->input('search'));
+                $query->where('business_name', 'like', '%' . $request->input('search') . '%');
             }
+
 
             // Get the results with the limit
             // $data = $query->limit($limit)->get();
@@ -174,7 +175,7 @@ class ArtisanController extends Controller
                 'data' => $data
             ], 200);
         }catch(ValidationException $e) {
-            
+
             return response()->json(['responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed', 'responseCode' => 500], 500);
         }
     }

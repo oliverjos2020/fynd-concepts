@@ -12,7 +12,7 @@ class ServiceController extends Controller
         try {
             // Get the search query and limit from the request
             $search = $request->input('search'); // Search for services
-            $limit = $request->input('limit', 2); // Default limit is 20, but can be overridden
+            $limit = $request->input('limit', 50); // Default limit is 20, but can be overridden
 
             // Start building the query
             $query = Service::query();
