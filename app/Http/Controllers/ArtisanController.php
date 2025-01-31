@@ -48,8 +48,8 @@ class ArtisanController extends Controller
             if ($request->has('state_id')) {
                 $query->where('state_id', $request->input('state_id'));
             }
-            if ($request->has('search')) {
-                $query->where('business_name', 'like', '%' . $request->input('search') . '%');
+            if ($request->has('searchText')) {
+                $query->where('business_name', 'like', '%' . $request->input('searchText') . '%');
             }
 
 
