@@ -131,17 +131,17 @@ Route::middleware('api')->group(function () {
     Route::get('/api/v1/refresh', [UserAPIController::class, 'refresh']);
     Route::post('/api/v1/logout', [UserAPIController::class, 'logout']);
     Route::post('/api/v1/registerUser', [UserAPIController::class, 'registerUser']);
-
+    Route::get('/api/v1/artisans', [ArtisanController::class, 'artisans']);
     Route::post('/api/v1/login', [UserAPIController::class, 'login']);
     Route::post('/api/v1/confirmOTP', [UserAPIController::class, 'confirmOtp']);
     Route::get('/api/v1/states', [ArtisanController::class, 'allState']);
     Route::get('/api/v1/notifications', [NotificationController::class, 'getNotifications']);
     Route::post('/api/v1/sendOTP', [UserAPIController::class, 'sendOTP']);
     Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
+    Route::get('/api/v1/services', [ServiceController::class, 'services']);
     Route::group(['middleware' => ['auth.jwt']], function() {
-        Route::get('/api/v1/services', [ServiceController::class, 'services']);
+        
         Route::post('/api/v1/change-password', [UserAPIController::class, 'changePassword']);
-        Route::get('/api/v1/artisans', [ArtisanController::class, 'artisans']);
         Route::post('/api/v1/updateProfile', [ArtisanController::class, 'updateProfile']);
         Route::post('/api/v1/getUser', [UserAPIController::class, 'getUser']);
         Route::post('/api/v1/upload-files', [FileUploadAPIController::class, 'uploadFiles']);
