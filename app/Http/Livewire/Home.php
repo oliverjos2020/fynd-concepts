@@ -20,6 +20,7 @@ class Home extends Component
     public $step = 1;
     public $business_name;
     public $work_phone_no;
+    public $phone_no;
     public $state;
     public $lga = [];
     public $service;
@@ -110,6 +111,7 @@ class Home extends Component
             'service_id' => $this->service,
             'subservice_id' => $this->subservice,
             'work_phone_no' => $this->work_phone_no,
+            'phone_no' => $this->phone_no,
             'yrs_of_expertise' => $this->yrs_of_expertise,
             'bio' => $this->bio,
             'passport' => $this->passport,

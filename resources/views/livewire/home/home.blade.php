@@ -86,6 +86,13 @@
                                 @error('work_phone_no')
                                     <label class="text-danger"> {{ $message }} </label>
                                 @enderror
+
+                                <label>Phone Number<span class="dec-icon"><i class="far fa-phone"></i></span></label>
+                                <input type="text" placeholder="+(234)98765498" wire:model="phone_no">
+                                @error('phone_no')
+                                    <label class="text-danger"> {{ $message }} </label>
+                                @enderror
+
                                 <label>Select Work State<span class="dec-icon"><i class="far fa-globe"></i></span></label>
                                 <select wire:model="state">
                                     <option value="">Select State</option> <!-- Default option -->
