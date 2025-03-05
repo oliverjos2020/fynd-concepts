@@ -167,12 +167,18 @@ class ArtisanController extends Controller
             if (!$userUpdated) {
                 return response()->json(['responseMessage' => 'User with email not found', 'responseCode' => 404], 404);
             }
-            $data = User::where('email', $request->email)->first();
-
+            // $data = User::where('email', $request->email)->first();
+            $user = User::with([
+                'photos',
+                'service' => function ($myquery) {
+                    $myquery->select('id', 'service'); // Include 'id' or the relevant foreign key
+                },
+                'state',
+                'lga'])->where('email', $request->email)->first();
             return response()->json([
                 'responseCode' => 200,
                 'responseMessage' => 'Profile updated successfully',
-                'data' => $data
+                'data' => $user
             ], 200);
         }catch(ValidationException $e) {
 

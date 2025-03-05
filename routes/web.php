@@ -139,13 +139,13 @@ Route::middleware('api')->group(function () {
     Route::post('/api/v1/sendOTP', [UserAPIController::class, 'sendOTP']);
     Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
     Route::get('/api/v1/services', [ServiceController::class, 'services']);
+    Route::post('/api/v1/review-rating', [ReviewController::class, 'create']);
+    Route::post('/api/v1/getUser', [UserAPIController::class, 'getUser']);
     Route::group(['middleware' => ['auth.jwt']], function() {
         
         Route::post('/api/v1/change-password', [UserAPIController::class, 'changePassword']);
         Route::post('/api/v1/updateProfile', [ArtisanController::class, 'updateProfile']);
-        Route::post('/api/v1/getUser', [UserAPIController::class, 'getUser']);
         Route::post('/api/v1/upload-files', [FileUploadAPIController::class, 'uploadFiles']);
-        Route::post('/api/v1/review-rating', [ReviewController::class, 'create']);
         Route::post('/api/v1/workImages', [FileUploadAPIController::class, 'workImages']);
         Route::post('/api/v1/add-favorite', [FavoriteAPIController::class, 'create']);
         Route::post('/api/v1/remove-favorite', [FavoriteAPIController::class, 'remove']);

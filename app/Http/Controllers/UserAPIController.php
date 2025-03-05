@@ -383,7 +383,7 @@ class UserAPIController extends Controller
                 'responseMessage' => $e->errors() ? array_values($e->errors())[0][0] : 'Validation failed',
                 'responseCode' => 422,
             ], 422);
-        }
+        } 
     }
     
     public function deleteAccount(Request $request)
