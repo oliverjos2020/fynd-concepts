@@ -142,8 +142,15 @@ class UserAPIController extends Controller
                 'state',
                 'lga'])->where('email', $credentials['email'])->first();
 
-            if (!$user) {
-                return response()->json(['responseMessage' => 'Invalid credentials', 'responseCode' => 401], 401);
+            // if (!$user) {
+            //     return response()->json(['responseMessage' => 'Invalid credentials', 'responseCode' => 401], 401);
+            // }
+            
+            if (!$user || !Hash::check($credentials['password'], $user->password)) {
+                return response()->json([
+                    'responseMessage' => 'Invalid credentials',
+                    'responseCode' => 401
+                ], 401);
             }
 
             if (is_null($user->email_verified_at)) {

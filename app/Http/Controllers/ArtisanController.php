@@ -32,8 +32,7 @@ class ArtisanController extends Controller
             'favorites' => function ($myquery) use ($loggedInUserId) {
                 $myquery->where('user_id', $loggedInUserId);
             }
-        ])
-        ->where('role_id', 2)->where('is_profile_complete', 1)->where('status', 1);
+        ])->where('role_id', 2)->where('is_profile_complete', 1)->where('status', 1);
 
             // Apply filters
             if ($request->has('service_id')) {
@@ -56,7 +55,6 @@ class ArtisanController extends Controller
             // Get the results with the limit
             // $data = $query->limit($limit)->get();
             $data = $query->orderBy('created_at', 'desc')->limit($limit)->get();
-
 
             // Calculate average rating for each artisan
             $data->each(function ($artisan) {
@@ -136,7 +134,7 @@ class ArtisanController extends Controller
                 'state_id' => ['required', 'exists:states,id'],
                 'lga_id' => ['required', 'exists:l_g_a_s,id'],
                 'service_id' => ['required', 'exists:services,id'],
-                'subservice_id' => ['required', 'exists:sub_services,id'],
+                // 'subservice_id' => ['required', 'exists:sub_services,id'],
                 'yrs_of_expertise' => ['required'],
                 'work_address' => ['required'],
                 'bio' => ['required'],
