@@ -140,7 +140,7 @@ Route::middleware('api')->group(function () {
     Route::post('/api/v1/sendOTP', [UserAPIController::class, 'sendOTP']);
     Route::post('/api/v1/forgot-password', [UserAPIController::class, 'forgotPassword']);
     Route::get('/api/v1/services', [ServiceController::class, 'services']);
-    Route::get('/api/v1/subservices', [SubServiceController::class, 'index']);
+    Route::post('/api/v1/subservices', [SubServiceController::class, 'index']);
     Route::post('/api/v1/review-rating', [ReviewController::class, 'create']);
     Route::post('/api/v1/getUser', [UserAPIController::class, 'getUser']);
     Route::group(['middleware' => ['auth.jwt']], function() {
