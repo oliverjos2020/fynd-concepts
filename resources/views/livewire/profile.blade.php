@@ -113,11 +113,11 @@
                         </tr>
                         <tr>
                             <th>Sub Service</th>
-                            <td>{{$user->subservice->subservice}}</td>
+                            <td>{{$user->subservice->subservice ?? ''}}</td>
                         </tr>
                         <tr>
                             <th>State</th>
-                            <td>{{$user->state->name}}</td>
+                            <td>{{$user->state->name ?? ''}}</td>
                         </tr>
                         <tr>
                             <th>LGA</th>
