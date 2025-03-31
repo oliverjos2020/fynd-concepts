@@ -23,7 +23,7 @@ class Dashboard extends Component
 
         // if(Auth()->user()->role_id == 1):
             $artisans = User::where('role_id', 2)->get();
-            $users = User::where('role_id', 1)->get();
+            $users = User::where('role_id', 3)->get();
             $services = Service::all();
             $subservices = SubService::all();
         //     $internationalClient = User::where('category_id', 2)->where('role_id', 3)->get();
@@ -119,7 +119,7 @@ class Dashboard extends Component
         $pendingArtisans = User::where('is_profile_complete', 1)->where('status', 0)->where('role_id', 2)->get();
 
         return view('dashboard.dashboard2', ['artisans' => $artisans, 'users' => $users, 'services' => $services, 'subservices' => $subservices, 'artisanChart' => $artisanChart, 'usersChart' => $usersChart, 'pendingArtisans' => $pendingArtisans])->layout('components.dashboard.dashboard-master');
-        return view('dashboard.dashboard2')->layout('components.dashboard.dashboard-master');
+        // return view('dashboard.dashboard2')->layout('components.dashboard.dashboard-master');
 
     }
 }

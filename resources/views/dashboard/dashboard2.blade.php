@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <p class="mb-2">Total Artisans</p>
+                            <p class="mb-2">Artisans</p>
                             <h4 class="mb-0" id="totalCollection">
                                 {{ $artisans->count() }}
                             </h4>
@@ -52,7 +52,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <p class="mb-2">Total users</p>
+                            <p class="mb-2"> Users</p>
                             <h4 class="mb-0" id="totalCount">
                                 {{ $users->count() }}
                             </h4>
