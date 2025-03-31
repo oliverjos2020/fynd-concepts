@@ -210,10 +210,19 @@
                                 </div> --}}
                                 <div class="list-single-main-item_content fl-wrap">
                                     <p>
-                                        <b>Upoload a selfie or passport:</b><br>
+                                        {{-- <b>Upoload a selfie or passport:</b><br> --}}
                                         <div class="col-sm-12">
                                             <div class="listsearch-input-item fl-wrap">
-                                                <form class="fuzone">
+                                                <div class="fu-text">
+                                                    {{-- <span><i class="far fa-cloud-upload-alt"></i> Click here or drop files to upload</span> --}}
+                                                    <div class="photoUpload-files fl-wrap">
+                                                        @if($uploadPassport)
+                                                            <img src="{{ $uploadPassport->temporaryUrl() }}" style="max-height:250px" class="image mt-2">
+                                                        @else
+                                                            <img src="{{ $passport }}" style="max-height:250px" class="image mt-2">
+                                                        @endif
+                                                    </div>
+                                                {{-- <form class="fuzone">
                                                     <div class="fu-text">
                                                         <span><i class="far fa-cloud-upload-alt"></i> Click here or drop files to upload</span>
                                                         <div class="photoUpload-files fl-wrap">
@@ -225,36 +234,36 @@
                                                         </div>
                                                     </div>
                                                     <input type="file" class="upload" wire:model="uploadPassport" accept="image/jpg, image/jpeg, image/png">
-                                                </form>
+                                                </form> --}}
                                             </div>
-                                            @error('passport')
+                                            {{-- @error('passport')
                                                 <label class="text-danger"> {{ $message }} </label>
-                                            @enderror
+                                            @enderror --}}
                                         </div>
                                     </p>
 
                                 </div>
-                                <div class="list-single-main-item_content fl-wrap">
+                                <div class="list-single-main-item_content fl-wrap mt-4" style="margin-top: 100px;">
                                     <p>
-                                        <b>Upoload Government ID (NIN, Voter's Card, Driver's License, etc):</b><br>
+                                        {{-- <b>Upoload Government ID (NIN, Voter's Card, Driver's License, etc):</b><br> --}}
                                         <div class="col-sm-12">
                                             <div class="listsearch-input-item fl-wrap">
-                                                <form class="fuzone">
+                                                <div class="photoUpload-files fl-wrap">
+                                                    {{-- @if($id_doc)
+                                                        <img src="{{ $id_doc->temporaryUrl() }}" style="max-height:120px" class="image mt-2">
+                                                    @endif --}}
+                                                @if($upload_id_doc)
+                                                    <img src="{{ $upload_id_doc->temporaryUrl() }}" style="max-height:250px" class="image mt-2">
+                                                @else
+                                                    <img src="{{ $id_doc }}" style="max-height:250px" class="image mt-2">
+                                                @endif
+                                                </div>
+                                                {{-- <form class="fuzone">
                                                     <div class="fu-text">
-                                                        <span><i class="far fa-cloud-upload-alt"></i> Click here or drop files to upload</span>
-                                                        <div class="photoUpload-files fl-wrap">
-                                                            {{-- @if($id_doc)
-                                                                <img src="{{ $id_doc->temporaryUrl() }}" style="max-height:120px" class="image mt-2">
-                                                            @endif --}}
-                                                        @if($upload_id_doc)
-                                                            <img src="{{ $upload_id_doc->temporaryUrl() }}" style="max-height:120px" class="image mt-2">
-                                                        @else
-                                                            <img src="{{ $id_doc }}" style="max-height:120px" class="image mt-2">
-                                                        @endif
-                                                        </div>
+
                                                     </div>
                                                     <input type="file" class="upload" wire:model="upload_id_doc" accept="image/jpg, image/jpeg, image/png">
-                                                </form>
+                                                </form> --}}
                                             </div>
                                             @error('id_doc')
                                                 <label class="text-danger"> {{ $message }} </label>
@@ -262,7 +271,6 @@
                                         </div>
                                     </p>
                                 </div>
-                                <button class="btn color-bg float-btn" wire:click="uploadDocuments">Upload Documents</button>
                             </div>
                         </div>
                     </div>
