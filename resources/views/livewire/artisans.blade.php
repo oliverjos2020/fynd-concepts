@@ -43,8 +43,8 @@
                                     <th>Role</th>
                                     <th>Account Status</th>
                                     <th>Status</th>
-                                    {{-- <th>Edit</th>
-                                    <th>Delete</th> --}}
+                                    <th>Action</th>
+                                    {{-- <th>Delete</th> --}}
 
                                 </tr>
                             </thead>
@@ -68,6 +68,22 @@
                                         <a class="btn btn-success btn-sm" wire:click="changeStatus({{$user->id}},'1')">Lock User</a>
                                         @elseif($user->lock_user == 1)
                                         <a class="btn btn-danger btn-sm" wire:click="changeStatus({{$user->id}},'0')">Unock User</a>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($user->send_mail == 0)
+                                        <a wire:click="sendMail('{{$user->email}}')" wire:loading.attr="disabled" wire:loading.class="cursor-not-allowed opacity-50"
+                                            wire:target="sendMail('{{ $user->email }}')" class="btn btn-primary btn-sm">
+                                             <span wire:loading.remove wire:target="sendMail('{{ $user->email }}')">
+                                                 Send Mail <i class="mdi mdi-mail"></i>
+                                             </span>
+                                             <span class="indicator-progress" wire:loading wire:target="sendMail('{{ $user->email }}')">
+                                                 Sending mail... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                             </span>
+                                         </a>
+
+                                        @elseif($user->send_mail == 1)
+                                            <a class="btn btn-dark btn-sm">Mail Sent <i class="mdi mdi-mail"></i></a>
                                         @endif
                                     </td>
                                 </tr>

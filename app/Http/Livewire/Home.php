@@ -11,6 +11,8 @@ use Livewire\Component;
 use App\Models\SubService;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdminNotificationMail;
 use Illuminate\Support\Facades\Storage;
 
 class Home extends Component
@@ -131,11 +133,13 @@ class Home extends Component
                 ]);
             endforeach;
         }
-
+        Mail::to('fyndconcepts@gmail.com')->send(new AdminNotificationMail(Auth()->user()->email, $this->business_name));
         $this->dispatchBrowserEvent('notify', [
             'type' => 'success',
             'message' => 'Profile Updated Successfully',
         ]);
+        return redirect(url('/home'));
+
         return redirect()->back();
 
     }

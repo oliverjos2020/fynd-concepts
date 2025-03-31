@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use App\Models\User;
-use Livewire\WithPagination;
 use Exception;
+use App\Models\User;
+use Livewire\Component;
+use App\Mail\NotifyArtisan;
+use Livewire\WithPagination;
+use Illuminate\Support\Facades\Mail;
 
 class Artisans extends Component
 {
@@ -40,6 +42,25 @@ class Artisans extends Component
         return;
     }
 
+    public function sendMail($email)
+    {
+        try {
+            Mail::to($email)->send(new NotifyArtisan($email));
+            User::where('email', $email)->update([
+                'send_mail' => 1
+            ]);
+            $this->dispatchBrowserEvent('notify', [
+                'type' =>'success',
+                'message' => 'Email sent successfully',
+            ]);
+        } catch (Exception $e) {
+            $this->dispatchBrowserEvent('notify', [
+                'type' => 'error',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function toggleStatus($user, $value)
     {
         User::find($user)->update([
@@ -56,7 +77,7 @@ class Artisans extends Component
 
     public function render()
     {
-        $users = User::where('name', 'like', '%' . $this->search . '%')->where('role_id', 2)->latest()->paginate($this->limit);
+        $users = User::where('name', 'like', '%' . $this->search . '%')->where('role_id', 2)->orderBy('updated_at', 'desc')->paginate($this->limit);
         return view('livewire.artisans', ['users' => $users])->layout('components.dashboard.dashboard-master');
     }
 }

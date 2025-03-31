@@ -164,7 +164,7 @@
                             </div>
 
                             <a wire:click="previous" class="btn float-btn color-bg">Previous</a>
-                            <a wire:click="next" style="margin-left:25px;" class="btn float-btn color-bg">Next</a>
+                            <a wire:click="next" style="margin-left:25px; cursor:pointer" class="btn float-btn color-bg">Next</a>
                         </div>
                     </div>
                 @elseif($step == 3)
@@ -220,7 +220,7 @@
                         </p>
                     </div>
                     <a wire:click="previous" class="btn float-btn color-bg">Previous</a>
-                    <a wire:click="next" style="margin-left:25px;" class="btn float-btn color-bg">Next</a>
+                    <a wire:click="next" style="margin-left:25px; cursor:pointer" class="btn float-btn color-bg">Next</a>
                 </div>
                 @elseif($step == 4)
                 <div class="list-single-main-item fl-wrap">
@@ -263,7 +263,7 @@
                     </p>
                 </div>
                     <a wire:click="previous" class="btn float-btn color-bg">Previous</a>
-                    <a style="margin-left:25px;" wire:click="submit" class="btn float-btn color-bg">Submit</a>
+                    <a style="margin-left:25px; cursor:pointer" wire:click="submit" class="btn float-btn color-bg">Submit</a>
                 </div>
                 @endif
             @else
